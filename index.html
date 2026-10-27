@@ -23,11 +23,30 @@ button{border:1px solid #e8dcc2;background:#fff;border-radius:20px;padding:8px 1
 button.on{background:#e06a00;color:#fff;border-color:#e06a00}
 .note{background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:14px;margin:16px 0}
 footer{padding:20px;text-align:center;color:#5c5142}
+.toprow{display:flex;align-items:center;gap:10px;margin:16px 0;flex-wrap:wrap}
+.top{background:#fff;border:1px solid #e8dcc2;border-radius:14px;padding:12px 16px;min-width:150px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+.top .big{font-size:28px;font-weight:800}
+.top.low .big{color:#0a7a2f}
+.top.high .big{color:#c00}
+.sep{font-size:28px;font-weight:800;color:#5c5142}
 </style>
 </head>
 <body>
 <header><div class="wrap"><div class="logo"><div class="mark">₹</div><div><h1>BhavSathi</h1><p style="margin:0">Aaj Ka Rate, ek nazar me</p></div></div></div></header>
 <main class="wrap">
+<h2>Sabse Sasta — Sabse Mehnga (listed shehron me)</h2>
+<p><b>Petrol:</b></p>
+<div class="toprow">
+<div class="top low"><small>Sabse Sasta</small><div class="big">₹101.54</div><div>Chandigarh</div></div>
+<div class="sep">−</div>
+<div class="top high"><small>Sabse Mehnga</small><div class="big">₹116.15</div><div>Hyderabad</div></div>
+</div>
+<p><b>Diesel:</b></p>
+<div class="toprow">
+<div class="top low"><small>Sabse Sasta</small><div class="big">₹89.47</div><div>Chandigarh</div></div>
+<div class="sep">−</div>
+<div class="top high"><small>Sabse Mehnga</small><div class="big">₹104.40</div><div>Thiruvananthapuram</div></div>
+</div>
 <p><b>Sheher chuno:</b></p>
 <div id="cities">
 <button class="on" data-city="Delhi">Delhi</button>
@@ -36,6 +55,13 @@ footer{padding:20px;text-align:center;color:#5c5142}
 <button data-city="Chennai">Chennai</button>
 <button data-city="Bengaluru">Bengaluru</button>
 <button data-city="Hyderabad">Hyderabad</button>
+<button data-city="Ahmedabad">Ahmedabad</button>
+<button data-city="Jaipur">Jaipur</button>
+<button data-city="Lucknow">Lucknow</button>
+<button data-city="Bhopal">Bhopal</button>
+<button data-city="Patna">Patna</button>
+<button data-city="Chandigarh">Chandigarh</button>
+<button data-city="Thiruvananthapuram">Thiruvananthapuram</button>
 </div>
 <h2 id="cityTitle">Delhi — 27 October 2026</h2>
 <div class="cards">
@@ -49,7 +75,7 @@ footer{padding:20px;text-align:center;color:#5c5142}
 </div>
 <div class="note">
 <b>Note:</b> Ye rate 27 October 2026 ke liye check kiye gaye hain. Petrol/Diesel ke rate sheher ke hisab se badalte hain, sona-chandi ka rate source aur sheher par thoda alag ho sakta hai, aur making charges / GST alag se lagte hain. Kharidne se pehle apne sheher ke pump ya jeweller se rate confirm kar lein.<br><br>
-<b>Sources:</b> Petrol/Diesel — KalingaTV / TechWordNews, 27 Oct 2026 (sab shehron me kal se koi badlav nahi), LPG — petroldieselprice, Oct 2026, PNG — IGL official (2 Sep 2026 se), CNG sheher-wise — Asianet Newsable, 26 Oct 2026, Sona-Chandi — All India Bullion Delhi reference, 27 Oct 2026.
+<b>Sources:</b> Petrol/Diesel — KalingaTV / TechWordNews, 27 Oct 2026 (sab shehron me kal se koi badlav nahi), naye sheher (Ahmedabad, Jaipur, Lucknow, Bhopal, Patna, Chandigarh, Thiruvananthapuram) — TechWordNews / IndiRate, 27 Oct 2026, LPG — petroldieselprice, Oct 2026, PNG — IGL official (2 Sep 2026 se), CNG sheher-wise — Asianet Newsable, 26 Oct 2026, Sona-Chandi — All India Bullion Delhi reference, 27 Oct 2026. Sabse Sasta / Sabse Mehnga box listed shehron ke hisab se hai.
 </div>
 </main>
 <footer>BhavSathi — Aaj Ka Rate • Rate roz update honge</footer>
@@ -60,7 +86,14 @@ Mumbai:{petrol:"₹111.21",diesel:"₹97.83",cng:"₹89.00"},
 Kolkata:{petrol:"₹113.51",diesel:"₹99.82",cng:"—"},
 Chennai:{petrol:"₹107.76",diesel:"₹99.55",cng:"₹99.50"},
 Bengaluru:{petrol:"₹111.68",diesel:"₹99.56",cng:"₹98.00"},
-Hyderabad:{petrol:"₹116.15",diesel:"₹104.23",cng:"₹112.00"}
+Hyderabad:{petrol:"₹116.15",diesel:"₹104.23",cng:"₹112.00"},
+Ahmedabad:{petrol:"₹102.15",diesel:"₹98.27",cng:"₹94.02"},
+Jaipur:{petrol:"₹113.19",diesel:"₹98.25",cng:"—"},
+Lucknow:{petrol:"₹101.86",diesel:"₹95.36",cng:"₹107.00"},
+Bhopal:{petrol:"₹114.54",diesel:"₹99.64",cng:"—"},
+Patna:{petrol:"₹113.37",diesel:"₹99.36",cng:"—"},
+Chandigarh:{petrol:"₹101.54",diesel:"₹89.47",cng:"₹93.80"},
+Thiruvananthapuram:{petrol:"₹115.49",diesel:"₹104.40",cng:"—"}
 };
 document.querySelectorAll("#cities button").forEach(function(btn){
 btn.addEventListener("click",function(){
