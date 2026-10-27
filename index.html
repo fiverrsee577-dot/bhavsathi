@@ -25,7 +25,7 @@ button.on{background:#e06a00;color:#fff;border-color:#e06a00}
 .modebtn.on{background:#e06a00;color:#fff}
 .note{background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:14px;margin:16px 0}
 footer{padding:20px;text-align:center;color:#5c5142}
-.updatenote{background:#e8f5e9;border:1px solid #a5d6a7;border-top:none;border-left:5px solid #0a7a2f;border-radius:0 0 12px 12px;padding:10px 16px;margin:0 0 12px;font-size:15px}
+.updatenote{background:#e8f5e9;border:1px solid #a5d6a7;border-top:none;border-left:5px solid #0a7a2f;border-radius:0 0 12px 12px;padding:10px 16px;margin:0 0 4px;font-size:15px}
 .card-petrol{background:#e8f5e9;border-color:#a5d6a7}
 .card-diesel{background:#ffedd5;border-color:#fdba74}
 .card-gold{background:#fff7cc;border-color:#e6c200}
@@ -76,11 +76,24 @@ body[data-sec="fuel"] #panel-metal{display:none}
 body.loaded #loader{opacity:0;pointer-events:none}
 @media(max-width:800px){.layout{flex-direction:column}.sidebar{position:static;width:auto}.sidebar .secwrap{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.secbtn{flex:0 0 auto;width:auto;white-space:nowrap}}
 
-.selbar{display:inline-block;width:auto;background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:7px 12px;margin:10px 0;font-size:15px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+.selbar{display:inline-block;width:auto;background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:7px 12px;margin:4px 0 6px;font-size:15px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
 #chooserTitle{font-size:16px;margin:10px 0 6px}
 body[data-sec="metal"] .fuel-only.legend{display:flex}
 header .wrap{max-width:none;padding:0 16px}
 .maincol{max-width:none;padding:0 16px 16px}
+.compareWrap{display:flex;gap:18px;align-items:flex-start}
+.sastaCol{flex:1;min-width:0}
+.sastaCol h2{margin:6px 0 4px}
+.calcCol{width:350px;flex-shrink:0;background:#fff;border:1px solid #e8dcc2;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+.calcCol h3{margin:0 0 6px;font-size:18px}
+.calcCol select{width:100%;padding:8px;margin:6px 0 10px;border:1px solid #e8dcc2;border-radius:10px;font-size:15px;background:#fff}
+.calcCol .cmpBtn{width:100%;background:#e06a00;color:#fff;border:none;font-weight:700;padding:9px;border-radius:12px;font-size:15px;cursor:pointer}
+.cmpRow{border-top:1px dashed #e8dcc2;padding:8px 0}
+.cmpRow b{font-size:16px}
+.bigsep{border:none;border-top:4px solid #e06a00;margin:16px 0}
+@media(max-width:700px){.compareWrap{flex-direction:column}.calcCol{width:auto}}
+body[data-sec="fuel"] .leg-metal{display:none}
+body[data-sec="metal"] .leg-fuel{display:none}
 </style>
 </head>
 <body data-sec="fuel"><div id="loader"><div class="lmark">₹</div><div style="font-size:20px;font-weight:800">BhavSathi</div><div class="muted">Aaj Ka Rate load ho raha hai…</div></div>
@@ -88,7 +101,7 @@ header .wrap{max-width:none;padding:0 16px}
 <div class="layout"><aside class="sidebar"><h3>Section chuno</h3><div class="secwrap"><button class="secbtn on" data-sec="fuel" type="button">⛽ Fuel aur Gas<small>Petrol, Diesel, CNG, LPG, PNG</small></button><button class="secbtn" data-sec="metal" type="button">🪙 Sona-Chandi aur Metal<small>Gold, Silver, Copper, Aluminium</small></button><button class="secbtn" data-sec="currency" type="button">💱 Currency<small>Dollar, Euro, Riyal, Dinar</small></button><button class="secbtn" data-sec="mandi" type="button">🌾 Kisan Mandi<small>Fasal ka wholesale bhav</small></button><button class="secbtn" data-sec="khad" type="button">🌱 Khad aur Beej<small>Urea, DAP, NPK, Beej</small></button><button class="secbtn" data-sec="bank" type="button">🏦 Bank aur Bachat<small>FD, PPF, Sukanya, NSC</small></button></div></aside><main class="wrap maincol">
 <div class="updatenote">🕖 <b>Roz subah 7 baje</b> — Petrol aur Diesel ka rate official company ke rate se verify karke BhavSathi par update hota hai.</div>
 <div class="selbar">Chuna hua sheher: <b class="selCity">Delhi</b></div>
-<h2 class="fuel-only">Sabse Sasta — Sabse Mehnga (listed shehron me)</h2>
+<div class="compareWrap fuel-only"><div class="sastaCol"><h2 class="fuel-only">Sabse Sasta — Sabse Mehnga (listed shehron me)</h2>
 <p class="fuel-only"><b>Petrol:</b></p>
 <div class="toprow fuel-only">
 <div class="top low"><small>Sabse Sasta</small><div class="big">₹88.66</div><div>Port Blair</div></div>
@@ -101,6 +114,18 @@ header .wrap{max-width:none;padding:0 16px}
 <div class="sep">−</div>
 <div class="top high"><small>Sabse Mehnga</small><div class="big">₹105.71</div><div>Vijayawada</div></div>
 </div>
+</div>
+<div class="calcCol">
+<h3>⛽ Petrol / Diesel Compare karo</h3>
+<p style="margin:0 0 8px;font-size:14px">Listed 44 shehron me se koi 2 sheher chuno — dono ka Petrol aur Diesel rate, aur dono ke beech ka gap dikhega.</p>
+<label style="font-size:14px"><b>Sheher 1</b><br><select id="cmpA"></select></label>
+<label style="font-size:14px"><b>Sheher 2</b><br><select id="cmpB"></select></label>
+<button class="cmpBtn" id="cmpBtn" type="button">Compare karo</button>
+<div id="cmpResult" style="margin-top:10px;font-size:15px"></div>
+<p style="margin:8px 0 0;font-size:13px;color:#666">Rate 27 October 2026 ke listed shehron ke hain. Poore India ke har district ka rate is list me nahi hai, isliye compare sirf in 44 shehron ke beech hoga.</p>
+</div>
+</div>
+<hr class="bigsep fuel-only">
 <p id="chooserTitle"><b>Sheher chuno (44 sheher):</b></p>
 <div style="margin:6px 0 10px"><button class="modebtn on" data-mode="city" type="button">Main city wise</button><button class="modebtn" data-mode="state" type="button">State wise</button></div>
 <div id="states" style="display:none">
@@ -190,7 +215,7 @@ header .wrap{max-width:none;padding:0 16px}
 <button data-city="Puducherry">Puducherry</button>
 <button data-city="Kavaratti">Kavaratti</button>
 </div>
-<div class="legend fuel-only"><span><i class="dot green"></i>Petrol</span><span><i class="dot orange"></i>Diesel</span><span><i class="dot gold"></i>Sona</span><span><i class="dot silver"></i>Chandi</span></div>
+<div class="legend fuel-only"><span class="leg-fuel"><i class="dot green"></i>Petrol</span><span class="leg-fuel"><i class="dot orange"></i>Diesel</span><span class="leg-metal"><i class="dot gold"></i>Sona</span><span class="leg-metal"><i class="dot silver"></i>Chandi</span></div>
 <h2 id="cityTitle" class="fuel-only">Delhi — 27 October 2026</h2>
 <div class="cards">
 <div class="card card-petrol" data-sec="fuel"><small>Petrol / litre</small><div class="price" id="petrol">₹102.12</div><small>Kal se koi badlav nahi</small></div>
@@ -421,6 +446,35 @@ window.scrollTo({top:0,behavior:"smooth"});
 function hideLoader(){document.body.classList.add("loaded");}
 window.addEventListener("load",hideLoader);
 setTimeout(hideLoader,1500);
+
+function stateOfCity(city){for(var s in stateMap){if(stateMap[s].indexOf(city)>=0){return s;}}return "";}
+function numRate(str){return parseFloat(str.replace("₹",""));}
+function renderCmp(){
+var a=document.getElementById("cmpA").value;
+var b=document.getElementById("cmpB").value;
+if(!data[a]||!data[b]){return;}
+var pa=numRate(data[a].petrol), pb=numRate(data[b].petrol);
+var da=numRate(data[a].diesel), db=numRate(data[b].diesel);
+var gp=Math.abs(pa-pb).toFixed(2), gd=Math.abs(da-db).toFixed(2);
+var pCheap=pa<pb?a:(pb<pa?b:"dono barabar");
+var dCheap=da<db?a:(db<da?b:"dono barabar");
+document.getElementById("cmpResult").innerHTML=
+'<div class="cmpRow"><b>Petrol</b><br>'+a+': '+data[a].petrol+' &nbsp;|&nbsp; '+b+': '+data[b].petrol+'<br><b>Gap: ₹'+gp+' / litre</b> — '+pCheap+' sasta</div>'+
+'<div class="cmpRow"><b>Diesel</b><br>'+a+': '+data[a].diesel+' &nbsp;|&nbsp; '+b+': '+data[b].diesel+'<br><b>Gap: ₹'+gd+' / litre</b> — '+dCheap+' sasta</div>';
+}
+(function(){
+var sa=document.getElementById("cmpA"), sb=document.getElementById("cmpB");
+Object.keys(data).forEach(function(city){
+var st=stateOfCity(city);
+var o1=document.createElement("option"); o1.value=city; o1.textContent=city+" ("+st+")"; sa.appendChild(o1);
+var o2=document.createElement("option"); o2.value=city; o2.textContent=city+" ("+st+")"; sb.appendChild(o2);
+});
+sa.value="Delhi"; sb.value="Vijayawada";
+sa.addEventListener("change",renderCmp);
+sb.addEventListener("change",renderCmp);
+document.getElementById("cmpBtn").addEventListener("click",renderCmp);
+renderCmp();
+})();
 </script>
 </body>
 </html>
