@@ -41,6 +41,14 @@ footer{padding:20px;text-align:center;color:#5c5142}
 .top.low .big{color:#0a7a2f}
 .top.high .big{color:#c00}
 .sep{font-size:28px;font-weight:800;color:#5c5142}
+.sharebox{background:#fff;border:1px solid #e8dcc2;border-radius:14px;padding:16px;margin:16px 0;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+.sharebox h3{margin:0 0 10px;font-size:18px}
+.sharebtn{display:inline-block;text-align:center;text-decoration:none;padding:11px 18px;border-radius:22px;margin:6px 6px 6px 0;font-weight:700;font-size:15px}
+.sharebtn.wa{background:#25D366;color:#fff}
+.sharebtn.tg{background:#229ED9;color:#fff}
+button.sharebtn.copy{background:#e06a00;color:#fff;border:none;cursor:pointer}
+.toast{position:fixed;left:50%;top:20px;transform:translateX(-50%);background:#0a7a2f;color:#fff;padding:12px 22px;border-radius:24px;font-weight:700;font-size:16px;box-shadow:0 4px 16px rgba(0,0,0,.25);display:none;z-index:999}
+.toast.show{display:block}
 </style>
 </head>
 <body>
@@ -75,6 +83,10 @@ footer{padding:20px;text-align:center;color:#5c5142}
 <button data-city="Patna">Patna</button>
 <button data-city="Chandigarh">Chandigarh</button>
 <button data-city="Thiruvananthapuram">Thiruvananthapuram</button>
+<button data-city="Gurgaon">Gurgaon</button>
+<button data-city="Noida">Noida</button>
+<button data-city="Pune">Pune</button>
+<button data-city="Bhubaneswar">Bhubaneswar</button>
 </div>
 <div class="legend"><span><i class="dot green"></i>Petrol</span><span><i class="dot orange"></i>Diesel</span><span><i class="dot gold"></i>Sona</span><span><i class="dot silver"></i>Chandi</span></div>
 <h2 id="cityTitle">Delhi — 27 October 2026</h2>
@@ -87,11 +99,20 @@ footer{padding:20px;text-align:center;color:#5c5142}
 <div class="card card-gold"><small>Sona 24K / 10 gram</small><div class="price">₹1,44,765</div><small>22K / 10 gram: ₹1,32,605</small></div>
 <div class="card card-silver"><small>Chandi / kg</small><div class="price">₹2,00,032</div><small>Source aur sheher par rate thoda alag ho sakta hai</small></div>
 </div>
+<div class="sharebox">
+<h3>📤 Share karo</h3>
+<p style="margin:0 0 10px">Aaj ka rate apne doston aur family ko bhejo.</p>
+<a class="sharebtn wa" href="https://wa.me/?text=BhavSathi%20%E2%80%94%20Aaj%20Ka%20Rate%3A%20Petrol%2C%20Diesel%2C%20LPG%2C%20Sona-Chandi%20ka%20aaj%20ka%20rate%20ek%20nazar%20me.%20https%3A%2F%2Ffiverrsee577-dot.github.io%2Fbhavsathi%2F" target="_blank" rel="noopener">WhatsApp par share karo</a>
+<a class="sharebtn tg" href="https://t.me/share/url?url=https%3A%2F%2Ffiverrsee577-dot.github.io%2Fbhavsathi%2F&amp;text=BhavSathi%20%E2%80%94%20Aaj%20Ka%20Rate" target="_blank" rel="noopener">Telegram par share karo</a>
+<button class="sharebtn copy" id="copyBtn" type="button">Link copy karo</button>
+<p id="copyMsg" style="margin:8px 0 0;font-size:14px"></p>
+</div>
 <div class="note">
 <b>Note:</b> Ye rate 27 October 2026 ke liye check kiye gaye hain. Petrol/Diesel ke rate sheher ke hisab se badalte hain, sona-chandi ka rate source aur sheher par thoda alag ho sakta hai, aur making charges / GST alag se lagte hain. Kharidne se pehle apne sheher ke pump ya jeweller se rate confirm kar lein.<br><br>
-<b>Sources:</b> Petrol/Diesel — KalingaTV / TechWordNews, 27 Oct 2026 (sab shehron me kal se koi badlav nahi), naye sheher (Ahmedabad, Jaipur, Lucknow, Bhopal, Patna, Chandigarh, Thiruvananthapuram) — TechWordNews / IndiRate, 27 Oct 2026, LPG — petroldieselprice, Oct 2026, PNG — IGL official (2 Sep 2026 se), CNG sheher-wise — Asianet Newsable, 26 Oct 2026, Sona-Chandi — All India Bullion Delhi reference, 27 Oct 2026. Sabse Sasta / Sabse Mehnga box listed shehron ke hisab se hai.
+<b>Sources:</b> Petrol/Diesel — KalingaTV / TechWordNews, 27 Oct 2026 (sab shehron me kal se koi badlav nahi), naye sheher (Ahmedabad, Jaipur, Lucknow, Bhopal, Patna, Chandigarh, Thiruvananthapuram) — TechWordNews / IndiRate, 27 Oct 2026, aur naye sheher (Gurgaon, Noida, Pune, Bhubaneswar) — TechWordNews / CarDekho, 27 Oct 2026, LPG — petroldieselprice, Oct 2026, PNG — IGL official (2 Sep 2026 se), CNG sheher-wise — Asianet Newsable, 26 Oct 2026, aur naye shehron ka CNG — CarDekho, 27 Oct 2026, Sona-Chandi — All India Bullion Delhi reference, 27 Oct 2026. Sabse Sasta / Sabse Mehnga box listed shehron ke hisab se hai.
 </div>
 </main>
+<div class="toast" id="toast">✅ Copied!</div>
 <footer>BhavSathi — Aaj Ka Rate • Rate roz update honge</footer>
 <script>
 var data={
@@ -107,7 +128,11 @@ Lucknow:{petrol:"₹101.86",diesel:"₹95.36",cng:"₹107.00"},
 Bhopal:{petrol:"₹114.54",diesel:"₹99.64",cng:"—"},
 Patna:{petrol:"₹113.37",diesel:"₹99.36",cng:"—"},
 Chandigarh:{petrol:"₹101.54",diesel:"₹89.47",cng:"₹93.80"},
-Thiruvananthapuram:{petrol:"₹115.49",diesel:"₹104.40",cng:"—"}
+Thiruvananthapuram:{petrol:"₹115.49",diesel:"₹104.40",cng:"—"},
+Gurgaon:{petrol:"₹102.97",diesel:"₹95.64",cng:"₹92.01"},
+Noida:{petrol:"₹101.96",diesel:"₹95.44",cng:"₹95.59"},
+Pune:{petrol:"₹111.90",diesel:"₹98.55",cng:"₹100.50"},
+Bhubaneswar:{petrol:"₹108.97",diesel:"₹100.68",cng:"—"}
 };
 document.querySelectorAll("#cities button").forEach(function(btn){
 btn.addEventListener("click",function(){
@@ -119,6 +144,20 @@ document.getElementById("petrol").textContent=data[c].petrol;
 document.getElementById("diesel").textContent=data[c].diesel;
 document.getElementById("cng").textContent=data[c].cng;
 });
+});
+function showToast(){
+var t=document.getElementById("toast");
+t.textContent="✅ Copied! Link copy ho gaya.";
+t.classList.add("show");
+document.getElementById("copyMsg").textContent="Link copy ho gaya! Ab kahi bhi paste karo.";
+setTimeout(function(){t.classList.remove("show");},2500);
+}
+document.getElementById("copyBtn").addEventListener("click",function(){
+var link="https://fiverrsee577-dot.github.io/bhavsathi/";
+if(navigator.clipboard){navigator.clipboard.writeText(link).then(showToast,function(){
+var ta=document.createElement("textarea");ta.value=link;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast();
+});}
+else{var ta=document.createElement("textarea");ta.value=link;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast();}
 });
 </script>
 </body>
