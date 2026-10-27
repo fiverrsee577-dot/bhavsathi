@@ -21,6 +21,8 @@ h2{font-size:20px}
 .price{font-size:32px;font-weight:800;margin:6px 0}
 button{border:1px solid #e8dcc2;background:#fff;border-radius:20px;padding:8px 14px;margin:4px;cursor:pointer;font-size:15px}
 button.on{background:#e06a00;color:#fff;border-color:#e06a00}
+.modebtn{border:2px solid #e06a00;background:#fff;border-radius:20px;padding:8px 16px;margin:4px;font-weight:700}
+.modebtn.on{background:#e06a00;color:#fff}
 .note{background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:14px;margin:16px 0}
 footer{padding:20px;text-align:center;color:#5c5142}
 .updatenote{background:#e8f5e9;border:1px solid #a5d6a7;border-left:5px solid #0a7a2f;border-radius:12px;padding:14px 16px;margin:16px 0;font-size:16px}
@@ -49,26 +51,96 @@ footer{padding:20px;text-align:center;color:#5c5142}
 button.sharebtn.copy{background:#e06a00;color:#fff;border:none;cursor:pointer}
 .toast{position:fixed;left:50%;top:20px;transform:translateX(-50%);background:#0a7a2f;color:#fff;padding:12px 22px;border-radius:24px;font-weight:700;font-size:16px;box-shadow:0 4px 16px rgba(0,0,0,.25);display:none;z-index:999}
 .toast.show{display:block}
+
+.layout{display:flex;gap:18px;max-width:1180px;margin:0 auto;padding:0 16px;align-items:flex-start}
+.maincol{flex:1;min-width:0}
+.sidebar{position:sticky;top:12px;width:230px;flex-shrink:0;background:#fff;border:1px solid #e8dcc2;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+.sidebar h3{margin:0 0 10px;font-size:17px}
+.secbtn{display:block;width:100%;text-align:left;border:1px solid #e8dcc2;background:#fff;border-radius:12px;padding:11px 12px;margin:0 0 8px;cursor:pointer;font-size:15px;font-weight:600}
+.secbtn.on{background:#e06a00;color:#fff;border-color:#e06a00}
+.secbtn small{display:block;font-weight:400;font-size:12px;opacity:.85}
+.sec-panel{display:none;animation:fadein .25s ease}
+body[data-sec="currency"] #panel-currency,body[data-sec="mandi"] #panel-mandi,body[data-sec="khad"] #panel-khad,body[data-sec="bank"] #panel-bank,body[data-sec="metal"] #panel-metal{display:block}
+body[data-sec="currency"] .cards,body[data-sec="mandi"] .cards,body[data-sec="khad"] .cards,body[data-sec="bank"] .cards{display:none}
+body:not([data-sec="fuel"]) .fuel-only{display:none}
+body[data-sec="metal"] .card[data-sec="fuel"]{display:none}
+body[data-sec="fuel"] #panel-metal{display:none}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.rotable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}
+.rotable td,.rotable th{padding:10px 12px;border-bottom:1px solid #eee;text-align:left;font-size:15px}
+.rotable tr:last-child td{border-bottom:none}
+.muted{color:#5c5142;font-size:14px}
+#loader{position:fixed;inset:0;background:#fdf6e9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:9999;transition:opacity .4s ease}
+#loader .lmark{width:84px;height:84px;border-radius:20px;background:#e06a00;color:#fff;display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:800;animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+body.loaded #loader{opacity:0;pointer-events:none}
+@media(max-width:800px){.layout{flex-direction:column}.sidebar{position:static;width:auto}.sidebar .secwrap{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.secbtn{flex:0 0 auto;width:auto;white-space:nowrap}}
+
+.selbar{background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:12px 14px;margin:16px 0;font-size:16px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+#chooserTitle{font-size:18px}
+body[data-sec="metal"] .fuel-only.legend{display:flex}
 </style>
 </head>
-<body>
+<body data-sec="fuel"><div id="loader"><div class="lmark">₹</div><div style="font-size:20px;font-weight:800">BhavSathi</div><div class="muted">Aaj Ka Rate load ho raha hai…</div></div>
 <header><div class="wrap"><div class="logo"><div class="mark">₹</div><div><h1>BhavSathi</h1><p style="margin:0">Aaj Ka Rate, ek nazar me</p></div></div></div></header>
-<main class="wrap">
+<div class="layout"><aside class="sidebar"><h3>Section chuno</h3><div class="secwrap"><button class="secbtn on" data-sec="fuel" type="button">⛽ Fuel aur Gas<small>Petrol, Diesel, CNG, LPG, PNG</small></button><button class="secbtn" data-sec="metal" type="button">🪙 Sona-Chandi aur Metal<small>Gold, Silver, Copper, Aluminium</small></button><button class="secbtn" data-sec="currency" type="button">💱 Currency<small>Dollar, Euro, Riyal, Dinar</small></button><button class="secbtn" data-sec="mandi" type="button">🌾 Kisan Mandi<small>Fasal ka wholesale bhav</small></button><button class="secbtn" data-sec="khad" type="button">🌱 Khad aur Beej<small>Urea, DAP, NPK, Beej</small></button><button class="secbtn" data-sec="bank" type="button">🏦 Bank aur Bachat<small>FD, PPF, Sukanya, NSC</small></button></div></aside><main class="wrap maincol">
 <div class="updatenote">🕖 <b>Roz subah 7 baje</b> — Petrol aur Diesel ka rate official company ke rate se verify karke BhavSathi par update hota hai.</div>
-<h2>Sabse Sasta — Sabse Mehnga (listed shehron me)</h2>
-<p><b>Petrol:</b></p>
-<div class="toprow">
-<div class="top low"><small>Sabse Sasta</small><div class="big">₹101.54</div><div>Chandigarh</div></div>
+<div class="selbar">Chuna hua sheher: <b class="selCity">Delhi</b></div>
+<h2 class="fuel-only">Sabse Sasta — Sabse Mehnga (listed shehron me)</h2>
+<p class="fuel-only"><b>Petrol:</b></p>
+<div class="toprow fuel-only">
+<div class="top low"><small>Sabse Sasta</small><div class="big">₹88.66</div><div>Port Blair</div></div>
 <div class="sep">−</div>
-<div class="top high"><small>Sabse Mehnga</small><div class="big">₹116.15</div><div>Hyderabad</div></div>
+<div class="top high"><small>Sabse Mehnga</small><div class="big">₹118.05</div><div>Vijayawada</div></div>
 </div>
-<p><b>Diesel:</b></p>
-<div class="toprow">
-<div class="top low"><small>Sabse Sasta</small><div class="big">₹89.47</div><div>Chandigarh</div></div>
+<p class="fuel-only"><b>Diesel:</b></p>
+<div class="toprow fuel-only">
+<div class="top low"><small>Sabse Sasta</small><div class="big">₹84.56</div><div>Port Blair</div></div>
 <div class="sep">−</div>
-<div class="top high"><small>Sabse Mehnga</small><div class="big">₹104.40</div><div>Thiruvananthapuram</div></div>
+<div class="top high"><small>Sabse Mehnga</small><div class="big">₹105.71</div><div>Vijayawada</div></div>
 </div>
-<p><b>Sheher chuno:</b></p>
+<p id="chooserTitle"><b>Sheher chuno (44 sheher):</b></p>
+<div style="margin:6px 0 10px"><button class="modebtn on" data-mode="city" type="button">Main city wise</button><button class="modebtn" data-mode="state" type="button">State wise</button></div>
+<div id="states" style="display:none">
+<button data-state="Delhi">Delhi</button>
+<button data-state="Maharashtra">Maharashtra</button>
+<button data-state="West Bengal">West Bengal</button>
+<button data-state="Tamil Nadu">Tamil Nadu</button>
+<button data-state="Karnataka">Karnataka</button>
+<button data-state="Telangana">Telangana</button>
+<button data-state="Gujarat">Gujarat</button>
+<button data-state="Rajasthan">Rajasthan</button>
+<button data-state="Uttar Pradesh">Uttar Pradesh</button>
+<button data-state="Haryana">Haryana</button>
+<button data-state="Madhya Pradesh">Madhya Pradesh</button>
+<button data-state="Bihar">Bihar</button>
+<button data-state="Chandigarh">Chandigarh</button>
+<button data-state="Kerala">Kerala</button>
+<button data-state="Odisha">Odisha</button>
+
+<button data-state="Andhra Pradesh">Andhra Pradesh</button>
+<button data-state="Arunachal Pradesh">Arunachal Pradesh</button>
+<button data-state="Assam">Assam</button>
+<button data-state="Chhattisgarh">Chhattisgarh</button>
+<button data-state="Goa">Goa</button>
+<button data-state="Himachal Pradesh">Himachal Pradesh</button>
+<button data-state="Jharkhand">Jharkhand</button>
+<button data-state="Manipur">Manipur</button>
+<button data-state="Meghalaya">Meghalaya</button>
+<button data-state="Mizoram">Mizoram</button>
+<button data-state="Nagaland">Nagaland</button>
+<button data-state="Punjab">Punjab</button>
+<button data-state="Sikkim">Sikkim</button>
+<button data-state="Tripura">Tripura</button>
+<button data-state="Uttarakhand">Uttarakhand</button>
+<button data-state="Jammu and Kashmir">Jammu and Kashmir</button>
+<button data-state="Andaman and Nicobar">Andaman and Nicobar</button>
+<button data-state="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</button>
+<button data-state="Ladakh">Ladakh</button>
+<button data-state="Puducherry">Puducherry</button>
+<button data-state="Lakshadweep">Lakshadweep</button>
+</div>
+<p id="stateNote" style="display:none;margin:8px 0;font-size:15px"></p>
 <div id="cities">
 <button class="on" data-city="Delhi">Delhi</button>
 <button data-city="Mumbai">Mumbai</button>
@@ -87,17 +159,146 @@ button.sharebtn.copy{background:#e06a00;color:#fff;border:none;cursor:pointer}
 <button data-city="Noida">Noida</button>
 <button data-city="Pune">Pune</button>
 <button data-city="Bhubaneswar">Bhubaneswar</button>
+<button data-city="Agra">Agra</button>
+<button data-city="Ghaziabad">Ghaziabad</button>
+<button data-city="Surat">Surat</button>
+<button data-city="Vadodara">Vadodara</button>
+<button data-city="Rajkot">Rajkot</button>
+<button data-city="Hisar">Hisar</button>
+
+<button data-city="Vijayawada">Vijayawada</button>
+<button data-city="Itanagar">Itanagar</button>
+<button data-city="Guwahati">Guwahati</button>
+<button data-city="Raipur">Raipur</button>
+<button data-city="Panaji">Panaji</button>
+<button data-city="Shimla">Shimla</button>
+<button data-city="Ranchi">Ranchi</button>
+<button data-city="Imphal">Imphal</button>
+<button data-city="Shillong">Shillong</button>
+<button data-city="Aizawl">Aizawl</button>
+<button data-city="Kohima">Kohima</button>
+<button data-city="Amritsar">Amritsar</button>
+<button data-city="Gangtok">Gangtok</button>
+<button data-city="Agartala">Agartala</button>
+<button data-city="Dehradun">Dehradun</button>
+<button data-city="Srinagar">Srinagar</button>
+<button data-city="Port Blair">Port Blair</button>
+<button data-city="Silvassa">Silvassa</button>
+<button data-city="Leh">Leh</button>
+<button data-city="Puducherry">Puducherry</button>
+<button data-city="Kavaratti">Kavaratti</button>
 </div>
-<div class="legend"><span><i class="dot green"></i>Petrol</span><span><i class="dot orange"></i>Diesel</span><span><i class="dot gold"></i>Sona</span><span><i class="dot silver"></i>Chandi</span></div>
-<h2 id="cityTitle">Delhi — 27 October 2026</h2>
+<div class="legend fuel-only"><span><i class="dot green"></i>Petrol</span><span><i class="dot orange"></i>Diesel</span><span><i class="dot gold"></i>Sona</span><span><i class="dot silver"></i>Chandi</span></div>
+<h2 id="cityTitle" class="fuel-only">Delhi — 27 October 2026</h2>
 <div class="cards">
-<div class="card card-petrol"><small>Petrol / litre</small><div class="price" id="petrol">₹102.12</div><small>Kal se koi badlav nahi</small></div>
-<div class="card card-diesel"><small>Diesel / litre</small><div class="price" id="diesel">₹95.20</div><small>Kal se koi badlav nahi</small></div>
-<div class="card"><small>CNG / kg (Delhi)</small><div class="price" id="cng">₹86.98</div><small>Sheher ke hisab se alag ho sakta hai</small></div>
-<div class="card"><small>PNG Domestic / SCM (Delhi)</small><div class="price">₹50.59</div><small>IGL, 2 Sep 2026 se lagu</small></div>
-<div class="card"><small>LPG Domestic 14.2 kg (Delhi, Oct 2026)</small><div class="price">₹942</div><small>Commercial 19 kg: ₹2,810</small></div>
-<div class="card card-gold"><small>Sona 24K / 10 gram</small><div class="price">₹1,44,765</div><small>22K / 10 gram: ₹1,32,605</small></div>
-<div class="card card-silver"><small>Chandi / kg</small><div class="price">₹2,00,032</div><small>Source aur sheher par rate thoda alag ho sakta hai</small></div>
+<div class="card card-petrol" data-sec="fuel"><small>Petrol / litre</small><div class="price" id="petrol">₹102.12</div><small>Kal se koi badlav nahi</small></div>
+<div class="card card-diesel" data-sec="fuel"><small>Diesel / litre</small><div class="price" id="diesel">₹95.20</div><small>Kal se koi badlav nahi</small></div>
+<div class="card" data-sec="fuel"><small>CNG / kg (Delhi)</small><div class="price" id="cng">₹86.98</div><small>Sheher ke hisab se alag ho sakta hai</small></div>
+<div class="card" data-sec="fuel"><small>PNG Domestic / SCM (Delhi)</small><div class="price">₹50.59</div><small>IGL, 2 Sep 2026 se lagu</small></div>
+<div class="card" data-sec="fuel"><small>LPG Domestic 14.2 kg (Delhi, Oct 2026)</small><div class="price">₹942</div><small>Commercial 19 kg: ₹2,810</small></div>
+<div class="card card-gold" data-sec="metal"><small>Sona 24K / 10 gram</small><div class="price">₹1,44,765</div><small>22K / 10 gram: ₹1,32,605</small></div>
+<div class="card card-silver" data-sec="metal"><small>Chandi / kg</small><div class="price">₹2,00,032</div><small>Source aur sheher par rate thoda alag ho sakta hai</small></div>
+</div>
+
+<div class="sec-panel" id="panel-metal">
+<h2>Sona-Chandi aur Metal — 27 October 2026</h2>
+<p class="muted">Chuna hua sheher: <b class="selCity">Delhi</b></p>
+<p class="muted">Sona ka rate All India Bullion Delhi reference se hai. Neeche wali unit isi rate ka hisab hai, alag rate nahi.</p>
+<table class="rotable">
+<tr><th>Item</th><th>Rate</th></tr>
+<tr><td>Gold 24K — per gram</td><td>₹14,477 (hisab se)</td></tr>
+<tr><td>Gold 24K — per pavan (8 g)</td><td>₹1,15,812 (hisab se)</td></tr>
+<tr><td>Gold 24K — per tola (11.66 g)</td><td>₹1,68,796 (hisab se)</td></tr>
+<tr><td>Gold 22K — per gram</td><td>₹13,261 (hisab se)</td></tr>
+<tr><td>Copper / kg</td><td>—</td></tr>
+<tr><td>Aluminium / kg</td><td>—</td></tr>
+<tr><td>Zinc / kg</td><td>—</td></tr>
+<tr><td>Lead / kg</td><td>—</td></tr>
+<tr><td>Nickel / kg</td><td>—</td></tr>
+<tr><td>Platinum / 10 g</td><td>—</td></tr>
+</table>
+<p class="muted">“—” matlab is draft me rate abhi verify nahi hua hai, guess karke nahi dala gaya hai. Live karne se pehle verify karke dala jayega.</p>
+</div>
+<div class="sec-panel" id="panel-currency">
+<h2>Currency — 1 unit = ₹ me (FBIL reference, weekdays)</h2>
+<p class="muted">Chuna hua sheher: <b class="selCity">Delhi</b></p>
+<table class="rotable">
+<tr><th>Currency</th><th>Rate</th></tr>
+<tr><td>US Dollar (USD)</td><td>—</td></tr>
+<tr><td>Euro (EUR)</td><td>—</td></tr>
+<tr><td>British Pound (GBP)</td><td>—</td></tr>
+<tr><td>UAE Dirham (AED)</td><td>—</td></tr>
+<tr><td>Saudi Riyal (SAR)</td><td>—</td></tr>
+<tr><td>Kuwaiti Dinar (KWD)</td><td>—</td></tr>
+<tr><td>Qatar Riyal (QAR)</td><td>—</td></tr>
+<tr><td>Bahrain Dinar (BHD)</td><td>—</td></tr>
+<tr><td>Oman Rial (OMR)</td><td>—</td></tr>
+<tr><td>Singapore Dollar (SGD)</td><td>—</td></tr>
+<tr><td>Australian Dollar (AUD)</td><td>—</td></tr>
+<tr><td>Canadian Dollar (CAD)</td><td>—</td></tr>
+<tr><td>Japanese Yen (JPY, per 100)</td><td>—</td></tr>
+<tr><td>Chinese Yuan (CNY)</td><td>—</td></tr>
+<tr><td>Thai Baht (THB)</td><td>—</td></tr>
+<tr><td>Malaysian Ringgit (MYR)</td><td>—</td></tr>
+<tr><td>Hong Kong Dollar (HKD)</td><td>—</td></tr>
+<tr><td>New Zealand Dollar (NZD)</td><td>—</td></tr>
+<tr><td>Swiss Franc (CHF)</td><td>—</td></tr>
+</table>
+<p class="muted">Draft me sirf structure hai — currency ka aaj ka rate verify karke hi live me dala jayega, guess nahi.</p>
+</div>
+<div class="sec-panel" id="panel-mandi">
+<h2>Kisan Mandi — Wholesale bhav / quintal (mandi-wise)</h2>
+<p class="muted">Chuna hua sheher: <b class="selCity">Delhi</b></p>
+<p class="muted">Ye dukaan ka retail rate nahi hai, mandi ka wholesale bhav hai. Rate mandi aur din ke hisab se alag ho sakta hai.</p>
+<table class="rotable">
+<tr><th>Fasal</th><th>Bhav / quintal</th></tr>
+<tr><td>Pyaaz</td><td>—</td></tr><tr><td>Aloo</td><td>—</td></tr><tr><td>Tamatar</td><td>—</td></tr>
+<tr><td>Gehu</td><td>—</td></tr><tr><td>Chawal (Dhan)</td><td>—</td></tr>
+<tr><td>Sarson</td><td>—</td></tr><tr><td>Soyabean</td><td>—</td></tr>
+<tr><td>Kapas</td><td>—</td></tr><tr><td>Makka</td><td>—</td></tr><tr><td>Bajra</td><td>—</td></tr>
+<tr><td>Chana</td><td>—</td></tr><tr><td>Jowar</td><td>—</td></tr>
+<tr><td>Arhar / Tur</td><td>—</td></tr><tr><td>Moong</td><td>—</td></tr>
+<tr><td>Masoor</td><td>—</td></tr><tr><td>Haldi</td><td>—</td></tr><tr><td>Mirchi (Sukhi)</td><td>—</td></tr>
+</table>
+<p class="muted">Draft me mandi rate “—” hai, kyunki aaj ka Agmarknet modal rate abhi is draft me verify karke nahi dala gaya hai.</p>
+</div>
+<div class="sec-panel" id="panel-khad">
+<h2>Khad aur Beej — Seasonal rate (roz ka rate nahi)</h2>
+<p class="muted">Chuna hua sheher: <b class="selCity">Delhi</b></p>
+<p class="muted">Khad ka rate NBS season me badalta hai, roz nahi. Beej ka rate bhi sowing season ka catalogue rate hota hai.</p>
+<table class="rotable">
+<tr><th>Item</th><th>Rate</th></tr>
+<tr><td>Urea (45 kg bag)</td><td>—</td></tr>
+<tr><td>DAP</td><td>—</td></tr>
+<tr><td>NPK 10:26:26</td><td>—</td></tr>
+<tr><td>NPK 12:32:16</td><td>—</td></tr>
+<tr><td>MOP / Potash</td><td>—</td></tr>
+<tr><td>SSP</td><td>—</td></tr>
+<tr><td>Nano Urea (500 ml)</td><td>—</td></tr>
+<tr><td>Sulphur-coated Urea</td><td>—</td></tr>
+<tr><td>Gehu Beej (seasonal)</td><td>—</td></tr>
+<tr><td>Dhan Beej (seasonal)</td><td>—</td></tr>
+</table>
+</div>
+<div class="sec-panel" id="panel-bank">
+<h2>Bank aur Bachat Rate — Oct–Dec 2026 (quarterly)</h2>
+<p class="muted">Chuna hua sheher: <b class="selCity">Delhi</b></p>
+<p class="muted">Small savings ka rate har 3 mahine me sarkari notification se badalta hai, roz nahi.</p>
+<table class="rotable">
+<tr><th>Scheme</th><th>Rate</th></tr>
+<tr><td>PPF</td><td>7.10%</td></tr>
+<tr><td>Sukanya Samriddhi</td><td>8.20%</td></tr>
+<tr><td>NSC</td><td>7.70%</td></tr>
+<tr><td>Senior Citizens (SCSS)</td><td>8.20%</td></tr>
+<tr><td>Kisan Vikas Patra (KVP)</td><td>7.50% (115 mahine)</td></tr>
+<tr><td>Post Office Monthly Income</td><td>7.40%</td></tr>
+<tr><td>Post Office Time Deposit 1 / 2 / 3 / 5 saal</td><td>6.90% / 7.00% / 7.10% / 7.50%</td></tr>
+<tr><td>Post Office Recurring Deposit</td><td>6.70%</td></tr>
+<tr><td>Post Office Savings</td><td>4.00%</td></tr>
+<tr><td>Repo Rate (RBI)</td><td>5.50%</td></tr>
+<tr><td>EPF (FY26, saal me ek baar)</td><td>8.25%</td></tr>
+</table>
+<p class="muted">Source: Finance Ministry / DEA quarterly notification Oct–Dec 2026, RBI, EPFO — research me mile hue rate, live karne se pehle dobara confirm kiye jayenge.</p>
 </div>
 <div class="sharebox">
 <h3>📤 Share karo</h3>
@@ -108,10 +309,10 @@ button.sharebtn.copy{background:#e06a00;color:#fff;border:none;cursor:pointer}
 <p id="copyMsg" style="margin:8px 0 0;font-size:14px"></p>
 </div>
 <div class="note">
-<b>Note:</b> Ye rate 27 October 2026 ke liye check kiye gaye hain. Petrol/Diesel ke rate sheher ke hisab se badalte hain, sona-chandi ka rate source aur sheher par thoda alag ho sakta hai, aur making charges / GST alag se lagte hain. Kharidne se pehle apne sheher ke pump ya jeweller se rate confirm kar lein.<br><br>
-<b>Sources:</b> Petrol/Diesel — KalingaTV / TechWordNews, 27 Oct 2026 (sab shehron me kal se koi badlav nahi), naye sheher (Ahmedabad, Jaipur, Lucknow, Bhopal, Patna, Chandigarh, Thiruvananthapuram) — TechWordNews / IndiRate, 27 Oct 2026, aur naye sheher (Gurgaon, Noida, Pune, Bhubaneswar) — TechWordNews / CarDekho, 27 Oct 2026, LPG — petroldieselprice, Oct 2026, PNG — IGL official (2 Sep 2026 se), CNG sheher-wise — Asianet Newsable, 26 Oct 2026, aur naye shehron ka CNG — CarDekho, 27 Oct 2026, Sona-Chandi — All India Bullion Delhi reference, 27 Oct 2026. Sabse Sasta / Sabse Mehnga box listed shehron ke hisab se hai.
+<b>Note:</b> Ye rate 27 October 2026 ke liye check kiye gaye hain. Petrol/Diesel ka rate state-wise bhi badalta hai (state ka VAT alag hota hai) aur district-wise bhi badalta hai (depot se doori / freight ke hisab se), isliye yahan sheher-wise rate diya gaya hai — ek hi state ke do shehron ka rate bhi alag ho sakta hai. Sona-chandi ka rate source aur sheher par thoda alag ho sakta hai, aur making charges / GST alag se lagte hain. Kharidne se pehle apne sheher ke pump ya jeweller se rate confirm kar lein.<br><br>
+<b>Sources:</b> Petrol/Diesel — KalingaTV / TechWordNews, 27 Oct 2026 (sab shehron me kal se koi badlav nahi), naye sheher (Ahmedabad, Jaipur, Lucknow, Bhopal, Patna, Chandigarh, Thiruvananthapuram) — TechWordNews / IndiRate, 27 Oct 2026, aur naye sheher (Gurgaon, Noida, Pune, Bhubaneswar) — TechWordNews / CarDekho, 27 Oct 2026, aur naye sheher (Agra, Ghaziabad) — Tezzbuzz, 27 Oct 2026, aur naye sheher (Surat, Vadodara, Rajkot) — Businessline / CarDekho / V3Cars, 27 Oct 2026, aur naya sheher (Hisar) — PriceKeeda / CarDekho / V3Cars, 27 Oct 2026, aur naye main sheher (Vijayawada, Itanagar, Guwahati, Raipur, Panaji, Shimla, Ranchi, Imphal, Shillong, Aizawl, Kohima, Amritsar, Gangtok, Agartala, Dehradun, Srinagar, Port Blair, Silvassa, Leh, Puducherry, Kavaratti) — petroldieselprice daily list, 27 Oct 2026 (kuch shehron me doosre source se chhota antar tha, jaise Vijayawada, Itanagar, Shimla, Kohima — kal 7 baje dobara verify karke sahi kar diya jayega), LPG — petroldieselprice, Oct 2026, PNG — IGL official (2 Sep 2026 se), CNG sheher-wise — Asianet Newsable, 26 Oct 2026, aur naye shehron ka CNG — CarDekho, 27 Oct 2026, Sona-Chandi — All India Bullion Delhi reference, 27 Oct 2026. Sabse Sasta / Sabse Mehnga box listed shehron ke hisab se hai.
 </div>
-</main>
+</main></div>
 <div class="toast" id="toast">✅ Copied!</div>
 <footer>BhavSathi — Aaj Ka Rate • Rate roz update honge</footer>
 <script>
@@ -132,7 +333,34 @@ Thiruvananthapuram:{petrol:"₹115.49",diesel:"₹104.40",cng:"—"},
 Gurgaon:{petrol:"₹102.97",diesel:"₹95.64",cng:"₹92.01"},
 Noida:{petrol:"₹101.96",diesel:"₹95.44",cng:"₹95.59"},
 Pune:{petrol:"₹111.90",diesel:"₹98.55",cng:"₹100.50"},
-Bhubaneswar:{petrol:"₹108.97",diesel:"₹100.68",cng:"—"}
+Bhubaneswar:{petrol:"₹108.97",diesel:"₹100.68",cng:"—"},
+Agra:{petrol:"₹101.66",diesel:"₹95.14",cng:"—"},
+Ghaziabad:{petrol:"₹101.88",diesel:"₹95.36",cng:"—"},
+Surat:{petrol:"₹101.82",diesel:"₹97.95",cng:"—"},
+Vadodara:{petrol:"₹101.46",diesel:"₹97.57",cng:"—"},
+Rajkot:{petrol:"₹101.85",diesel:"₹97.99",cng:"—"},
+Hisar:{petrol:"₹103.53",diesel:"₹96.17",cng:"—"},
+Vijayawada:{petrol:"₹118.05",diesel:"₹105.71",cng:"—"},
+Itanagar:{petrol:"₹97.43",diesel:"₹86.88",cng:"—"},
+Guwahati:{petrol:"₹105.85",diesel:"₹97.33",cng:"—"},
+Raipur:{petrol:"₹108.06",diesel:"₹101.32",cng:"—"},
+Panaji:{petrol:"₹104.19",diesel:"₹96.07",cng:"—"},
+Shimla:{petrol:"₹102.55",diesel:"₹94.61",cng:"—"},
+Ranchi:{petrol:"₹105.93",diesel:"₹101.06",cng:"—"},
+Imphal:{petrol:"₹106.87",diesel:"₹92.60",cng:"—"},
+Shillong:{petrol:"₹102.26",diesel:"₹93.83",cng:"—"},
+Aizawl:{petrol:"₹105.52",diesel:"₹94.35",cng:"—"},
+Kohima:{petrol:"₹104.39",diesel:"₹95.91",cng:"—"},
+Amritsar:{petrol:"₹106.36",diesel:"₹96.22",cng:"—"},
+Gangtok:{petrol:"₹110.95",diesel:"₹97.75",cng:"—"},
+Agartala:{petrol:"₹105.17",diesel:"₹94.05",cng:"—"},
+Dehradun:{petrol:"₹100.54",diesel:"₹96.00",cng:"—"},
+Srinagar:{petrol:"₹104.33",diesel:"₹93.02",cng:"—"},
+"Port Blair":{petrol:"₹88.66",diesel:"₹84.56",cng:"—"},
+Silvassa:{petrol:"₹99.50",diesel:"₹95.40",cng:"—"},
+Leh:{petrol:"₹109.81",diesel:"₹97.92",cng:"—"},
+Puducherry:{petrol:"₹103.58",diesel:"₹93.79",cng:"—"},
+Kavaratti:{petrol:"₹107.50",diesel:"₹102.80",cng:"—"}
 };
 document.querySelectorAll("#cities button").forEach(function(btn){
 btn.addEventListener("click",function(){
@@ -140,9 +368,29 @@ document.querySelectorAll("#cities button").forEach(function(b){b.classList.remo
 btn.classList.add("on");
 var c=btn.getAttribute("data-city");
 document.getElementById("cityTitle").textContent=c+" — 27 October 2026";
+document.querySelectorAll(".selCity").forEach(function(el){el.textContent=c;});
 document.getElementById("petrol").textContent=data[c].petrol;
 document.getElementById("diesel").textContent=data[c].diesel;
 document.getElementById("cng").textContent=data[c].cng;
+});
+});
+var stateMap={Delhi:["Delhi"],Maharashtra:["Mumbai","Pune"],"West Bengal":["Kolkata"],"Tamil Nadu":["Chennai"],Karnataka:["Bengaluru"],Telangana:["Hyderabad"],Gujarat:["Ahmedabad","Surat","Vadodara","Rajkot"],Rajasthan:["Jaipur"],"Uttar Pradesh":["Lucknow","Noida","Agra","Ghaziabad"],Haryana:["Gurgaon","Hisar"],"Madhya Pradesh":["Bhopal"],Bihar:["Patna"],Chandigarh:["Chandigarh"],Kerala:["Thiruvananthapuram"],Odisha:["Bhubaneswar"],"Andhra Pradesh":["Vijayawada"],"Arunachal Pradesh":["Itanagar"],Assam:["Guwahati"],Chhattisgarh:["Raipur"],Goa:["Panaji"],"Himachal Pradesh":["Shimla"],Jharkhand:["Ranchi"],Manipur:["Imphal"],Meghalaya:["Shillong"],Mizoram:["Aizawl"],Nagaland:["Kohima"],Punjab:["Amritsar"],Sikkim:["Gangtok"],Tripura:["Agartala"],Uttarakhand:["Dehradun"],"Jammu and Kashmir":["Srinagar"],"Andaman and Nicobar":["Port Blair"],"Dadra and Nagar Haveli and Daman and Diu":["Silvassa"],Ladakh:["Leh"],Puducherry:["Puducherry"],Lakshadweep:["Kavaratti"]};
+function showAllCities(){document.querySelectorAll("#cities button").forEach(function(b){b.style.display=""});document.getElementById("stateNote").style.display="none";}
+document.querySelectorAll(".modebtn").forEach(function(btn){
+btn.addEventListener("click",function(){
+document.querySelectorAll(".modebtn").forEach(function(b){b.classList.remove("on")});
+btn.classList.add("on");
+if(btn.getAttribute("data-mode")==="state"){document.getElementById("states").style.display="";document.querySelectorAll("#cities button").forEach(function(b){b.style.display="none"});document.getElementById("chooserTitle").innerHTML="<b>State chuno (36 state):</b>";var n=document.getElementById("stateNote");n.style.display="";n.textContent="State ka koi ek rate nahi hota, har sheher ka rate alag hai.";}
+else{document.getElementById("states").style.display="none";document.getElementById("chooserTitle").innerHTML="<b>Sheher chuno (44 sheher):</b>";showAllCities();}
+});
+});
+document.querySelectorAll("#states button").forEach(function(btn){
+btn.addEventListener("click",function(){
+document.querySelectorAll("#states button").forEach(function(b){b.classList.remove("on")});
+btn.classList.add("on");
+var s=btn.getAttribute("data-state");var list=stateMap[s]||[];
+document.querySelectorAll("#cities button").forEach(function(b){b.style.display=list.indexOf(b.getAttribute("data-city"))>=0?"":"none"});
+document.getElementById("chooserTitle").innerHTML="<b>"+s+" ke sheher ("+list.length+" sheher):</b>";var n=document.getElementById("stateNote");n.style.display="";n.textContent=s+" ke sheher: "+list.join(", ")+".";
 });
 });
 function showToast(){
@@ -159,6 +407,18 @@ var ta=document.createElement("textarea");ta.value=link;document.body.appendChil
 });}
 else{var ta=document.createElement("textarea");ta.value=link;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast();}
 });
+
+document.querySelectorAll(".secbtn").forEach(function(btn){
+btn.addEventListener("click",function(){
+document.querySelectorAll(".secbtn").forEach(function(b){b.classList.remove("on")});
+btn.classList.add("on");
+document.body.setAttribute("data-sec",btn.getAttribute("data-sec"));
+window.scrollTo({top:0,behavior:"smooth"});
+});
+});
+function hideLoader(){document.body.classList.add("loaded");}
+window.addEventListener("load",hideLoader);
+setTimeout(hideLoader,1500);
 </script>
 </body>
 </html>
