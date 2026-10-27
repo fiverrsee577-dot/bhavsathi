@@ -107,6 +107,10 @@ body[data-sec="common"] #cityTitle{display:block}
 .cmpTop .top{flex:1;min-width:0;padding:10px}
 .cmpTop .top .big{font-size:22px}
 .cmpSearch{width:100%;padding:8px;margin:0 0 10px;border:1px solid #e8dcc2;border-radius:10px;font-size:15px;background:#fff;box-sizing:border-box}
+body[data-sec="currency"] .fuel-common,body[data-sec="mandi"] .fuel-common,body[data-sec="khad"] .fuel-common,body[data-sec="bank"] .fuel-common,body[data-sec="metal"] .fuel-common{display:none}
+.cmpList{display:flex;flex-wrap:wrap;gap:4px;max-height:190px;overflow:auto;margin:6px 0 10px}
+.cmpListBtn{border:1px solid #e8dcc2;background:#fff;border-radius:14px;padding:5px 9px;font-size:12px;cursor:pointer}
+.cmpListBtn.on{background:#e06a00;color:#fff;border-color:#e06a00}
 </style>
 </head>
 <body data-sec="common"><div id="loader"><div class="lmark">₹</div><div style="font-size:20px;font-weight:800">BhavSathi</div><div class="muted"><span data-lang="loader">Aaj Ka Rate load ho raha hai…</span></div></div>
@@ -114,15 +118,15 @@ body[data-sec="common"] #cityTitle{display:block}
 <div class="layout"><aside class="sidebar"><h3 data-lang="sectionTitle">Section chuno</h3><div class="secwrap"><button class="secbtn on" data-sec="common" type="button"><span data-lang="secCommon">🏠 Common Items</span><small data-lang="secCommonSub">Petrol, Diesel, CNG, Sona, Chandi</small></button><button class="secbtn" data-sec="fuel" type="button"><span data-lang="secFuel">⛽ Fuel aur Gas</span><small data-lang="secFuelSub">Petrol, Diesel, CNG, LPG, PNG</small></button><button class="secbtn" data-sec="metal" type="button"><span data-lang="secMetal">🪙 Sona-Chandi aur Metal</span><small data-lang="secMetalSub">Gold, Silver, Copper, Aluminium</small></button><button class="secbtn" data-sec="currency" type="button"><span data-lang="secCurrency">💱 Currency</span><small data-lang="secCurrencySub">Dollar, Euro, Riyal, Dinar</small></button><button class="secbtn" data-sec="mandi" type="button"><span data-lang="secMandi">🌾 Kisan Mandi</span><small data-lang="secMandiSub">Fasal ka wholesale bhav</small></button><button class="secbtn" data-sec="khad" type="button"><span data-lang="secKhad">🌱 Khad aur Beej</span><small data-lang="secKhadSub">Urea, DAP, NPK, Beej</small></button><button class="secbtn" data-sec="bank" type="button"><span data-lang="secBank">🏦 Bank aur Bachat</span><small data-lang="secBankSub">FD, PPF, Sukanya, NSC</small></button></div></aside><main class="wrap maincol">
 <div class="updatenote" data-lang="note7">🕖 <b>Roz subah 7 baje</b> — Petrol aur Diesel ka rate official company ke rate se verify karke BhavSathi par update hota hai.</div>
 <div class="selbar"><span data-lang="selCity">Chuna hua sheher:</span> <b class="selCity">Delhi</b></div>
-<div class="compareWrap fuel-only"><div class="sastaCol"><h2 class="fuel-only" data-lang="sastaTitle">Sabse Sasta — Sabse Mehnga (listed shehron me)</h2>
-<p class="fuel-only"><b data-lang="petrolWord">Petrol:</b></p>
-<div class="toprow fuel-only">
+<div class="compareWrap fuel-common"><div class="sastaCol"><h2 data-lang="sastaTitle">Sabse Sasta — Sabse Mehnga (listed shehron me)</h2>
+<p><b data-lang="petrolWord">Petrol:</b></p>
+<div class="toprow">
 <div class="top low"><small data-lang="sastaBox">Sabse Sasta</small><div class="big">₹88.66</div><div>Port Blair</div></div>
 <div class="sep">−</div>
 <div class="top high"><small data-lang="mehngaBox">Sabse Mehnga</small><div class="big">₹118.05</div><div>Vijayawada</div></div>
 </div>
-<p class="fuel-only"><b data-lang="dieselWord">Diesel:</b></p>
-<div class="toprow fuel-only">
+<p><b data-lang="dieselWord">Diesel:</b></p>
+<div class="toprow">
 <div class="top low"><small data-lang="sastaBox">Sabse Sasta</small><div class="big">₹84.56</div><div>Port Blair</div></div>
 <div class="sep">−</div>
 <div class="top high"><small data-lang="mehngaBox">Sabse Mehnga</small><div class="big">₹105.71</div><div>Vijayawada</div></div>
@@ -131,14 +135,14 @@ body[data-sec="common"] #cityTitle{display:block}
 <div class="calcCol">
 <h3 data-lang="compareTitle">⛽ Petrol / Diesel Compare karo</h3>
 <p style="margin:0 0 8px;font-size:14px" data-lang="compareShort">2 sheher chuno, gap dekho.</p>
-<input class="cmpSearch" id="cmpSearch" type="text" placeholder="Sheher search karo…"><label style="font-size:14px"><b data-lang="sheher1">Sheher 1</b><br><select id="cmpA"></select></label>
-<label style="font-size:14px"><b data-lang="sheher2">Sheher 2</b><br><select id="cmpB"></select></label>
+<input class="cmpSearch" id="cmpSearch" type="text" placeholder="Sheher search karo…"><p id="cmpPick" style="margin:6px 0;font-size:14px"></p><div class="cmpList" id="cmpList"></div>
+
 <button class="cmpBtn" id="cmpBtn" type="button" data-lang="compareBtn">Compare karo</button>
 <div id="cmpResult" style="margin-top:10px;font-size:15px"></div>
 <p style="margin:8px 0 0;font-size:13px;color:#666" data-lang="compareNote">Rate: 27 Oct 2026, listed 44 sheher.</p>
 </div>
 </div>
-<hr class="bigsep fuel-only">
+<hr class="bigsep fuel-common">
 <p id="chooserTitle"><b>Sheher chuno (44 sheher):</b></p>
 <div style="margin:6px 0 10px"><button class="modebtn on" data-mode="city" type="button" data-lang="modeCity">Main city wise</button><button class="modebtn" data-mode="state" type="button" data-lang="modeState">State wise</button></div>
 <div id="states" style="display:none">
@@ -473,10 +477,33 @@ function updateChooserTitle(){var el=document.getElementById("chooserTitle");if(
 function updateStateNote(){var n=document.getElementById("stateNote");if(!n){return;}if(stateNoteMode==="general"){n.style.display="";n.textContent=T("stateNoteGeneral");}else if(stateNoteMode==="cities"){n.style.display="";n.textContent=T("stateNoteCities").replace("{s}",stateNoteState)+" "+stateNoteList.join(", ")+".";}else{n.style.display="none";}}
 function stateOfCity(city){for(var s in stateMap){if(stateMap[s].indexOf(city)>=0){return s;}}return "";}
 function numRate(str){return parseFloat(str.replace("₹",""));}
+var cmpCityA="Delhi", cmpCityB="Vijayawada", cmpNext=1;
+function updateCmpPick(){
+var el=document.getElementById("cmpPick");if(!el){return;}
+el.innerHTML=T("sheher1")+": <b>"+(cmpCityA||"—")+"</b> | "+T("sheher2")+": <b>"+(cmpCityB||"—")+"</b>";
+}
+function renderCmpList(){
+var q=document.getElementById("cmpSearch").value.toLowerCase().trim();
+var list=document.getElementById("cmpList");list.innerHTML="";
+Object.keys(data).forEach(function(city){
+var st=stateOfCity(city);
+if(q && city.toLowerCase().indexOf(q)<0 && st.toLowerCase().indexOf(q)<0){return;}
+var btn=document.createElement("button");btn.type="button";btn.className="cmpListBtn"+((city===cmpCityA||city===cmpCityB)?" on":"");btn.textContent=city+" ("+st+")";
+btn.addEventListener("click",function(){
+if(city===cmpCityA){cmpCityA="";cmpNext=2;}
+else if(city===cmpCityB){cmpCityB="";cmpNext=1;}
+else if(cmpNext===1){cmpCityA=city;cmpNext=2;}
+else{cmpCityB=city;cmpNext=1;}
+renderCmpList();renderCmp();
+});
+list.appendChild(btn);
+});
+}
 function renderCmp(){
-var a=document.getElementById("cmpA").value;
-var b=document.getElementById("cmpB").value;
-if(!data[a]||!data[b]){return;}
+updateCmpPick();
+var a=cmpCityA, b=cmpCityB;
+var res=document.getElementById("cmpResult");
+if(!a||!b||!data[a]||!data[b]){res.innerHTML="<p>"+T("compareShort")+"</p>";return;}
 var pa=numRate(data[a].petrol), pb=numRate(data[b].petrol);
 var da=numRate(data[a].diesel), db=numRate(data[b].diesel);
 var gp=Math.abs(pa-pb).toFixed(2), gd=Math.abs(da-db).toFixed(2);
@@ -484,36 +511,14 @@ var pw=T("petrolLabel"), dw=T("dieselLabel"), gw=T("gapWord"), sw=T("sastaWord")
 var pText=pa===pb?eq:(pa<pb?a:b)+" "+sw;
 var dText=da===db?eq:(da<db?a:b)+" "+sw;
 function box(city,price){return '<div class="top"><small>'+city+'</small><div class="big">'+price+'</div></div>';}
-document.getElementById("cmpResult").innerHTML=
+res.innerHTML=
 '<p style="margin:8px 0 4px"><b>'+pw+'</b></p><div class="toprow cmpTop">'+box(a,data[a].petrol)+'<div class="sep">−</div>'+box(b,data[b].petrol)+'</div><p style="margin:4px 0 10px"><b>'+gw+' ₹'+gp+' / litre — '+pText+'</b></p>'+
 '<p style="margin:8px 0 4px"><b>'+dw+'</b></p><div class="toprow cmpTop">'+box(a,data[a].diesel)+'<div class="sep">−</div>'+box(b,data[b].diesel)+'</div><p style="margin:4px 0 10px"><b>'+gw+' ₹'+gd+' / litre — '+dText+'</b></p>';
 }
-function fillCmpOptions(filter){
-var sa=document.getElementById("cmpA"), sb=document.getElementById("cmpB");
-sa.innerHTML=""; sb.innerHTML="";
-Object.keys(data).forEach(function(city){
-var st=stateOfCity(city);
-var o1=document.createElement("option"); o1.value=city; o1.textContent=city+" ("+st+")"; sa.appendChild(o1);
-var o2=document.createElement("option"); o2.value=city; o2.textContent=city+" ("+st+")"; sb.appendChild(o2);
-});
-}
 (function(){
-var sa=document.getElementById("cmpA"), sb=document.getElementById("cmpB");
-fillCmpOptions("");
-sa.value="Delhi"; sb.value="Vijayawada";
-sa.addEventListener("change",renderCmp);
-sb.addEventListener("change",renderCmp);
 document.getElementById("cmpBtn").addEventListener("click",renderCmp);
-document.getElementById("cmpSearch").addEventListener("input",function(){
-var q=this.value.toLowerCase().trim();
-if(!q){return;}
-var found=null;
-Object.keys(data).forEach(function(city){
-if(!found && (city.toLowerCase().indexOf(q)>=0 || stateOfCity(city).toLowerCase().indexOf(q)>=0)){found=city;}
-});
-if(found){sb.value=found;renderCmp();}
-});
-renderCmp();
+document.getElementById("cmpSearch").addEventListener("input",function(){renderCmpList();});
+renderCmpList();renderCmp();
 })();
 function applyLang(lang){
 if(!LANG[lang]){lang="hinglish";}
