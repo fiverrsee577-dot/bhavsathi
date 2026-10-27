@@ -43,7 +43,10 @@ footer{padding:20px;text-align:center;color:#5c5142}
 .top.low .big{color:#0a7a2f}
 .top.high .big{color:#c00}
 .sep{font-size:28px;font-weight:800;color:#5c5142}
-.sharebox{background:#fff;border:1px solid #e8dcc2;border-radius:14px;padding:16px;margin:16px 0;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+.sharebox{background:#fff;border:1px solid #e8dcc2;border-radius:14px;padding:20px;margin:40px 0 16px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+.shareRow{display:flex;gap:10px}
+.shareRow .sharebtn{flex:1;margin:0;padding:13px 10px}
+@media(max-width:600px){.shareRow{flex-wrap:wrap}.shareRow .sharebtn{flex:1 1 140px}}
 .sharebox h3{margin:0 0 10px;font-size:18px}
 .sharebtn{display:inline-block;text-align:center;text-decoration:none;padding:11px 18px;border-radius:22px;margin:6px 6px 6px 0;font-weight:700;font-size:15px}
 .sharebtn.wa{background:#25D366;color:#fff}
@@ -340,9 +343,9 @@ body[data-sec="common"] #cityTitle{display:block}
 <div class="sharebox">
 <h3 data-lang="shareTitle">📤 Share karo</h3>
 <p style="margin:0 0 10px">Aaj ka rate apne doston aur family ko bhejo.</p>
-<a class="sharebtn wa" href="https://wa.me/?text=BhavSathi%20%E2%80%94%20Aaj%20Ka%20Rate%3A%20Petrol%2C%20Diesel%2C%20LPG%2C%20Sona-Chandi%20ka%20aaj%20ka%20rate%20ek%20nazar%20me.%20https%3A%2F%2Ffiverrsee577-dot.github.io%2Fbhavsathi%2F" target="_blank" rel="noopener">WhatsApp par share karo</a>
+<div class="shareRow"><a class="sharebtn wa" href="https://wa.me/?text=BhavSathi%20%E2%80%94%20Aaj%20Ka%20Rate%3A%20Petrol%2C%20Diesel%2C%20LPG%2C%20Sona-Chandi%20ka%20aaj%20ka%20rate%20ek%20nazar%20me.%20https%3A%2F%2Ffiverrsee577-dot.github.io%2Fbhavsathi%2F" target="_blank" rel="noopener">WhatsApp par share karo</a>
 <a class="sharebtn tg" href="https://t.me/share/url?url=https%3A%2F%2Ffiverrsee577-dot.github.io%2Fbhavsathi%2F&amp;text=BhavSathi%20%E2%80%94%20Aaj%20Ka%20Rate" target="_blank" rel="noopener">Telegram par share karo</a>
-<button class="sharebtn copy" id="copyBtn" type="button">Link copy karo</button>
+<button class="sharebtn copy" id="copyBtn" type="button">Link copy karo</button></div>
 <p id="copyMsg" style="margin:8px 0 0;font-size:14px"></p>
 </div>
 <div class="note">
