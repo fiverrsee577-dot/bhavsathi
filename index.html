@@ -19,13 +19,13 @@ h2{font-size:20px}
 .card{background:#fff;border:1px solid #e8dcc2;border-radius:14px;padding:16px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
 .card small{color:#5c5142}
 .price{font-size:32px;font-weight:800;margin:6px 0}
-button{border:1px solid #e8dcc2;background:#fff;border-radius:20px;padding:8px 14px;margin:4px;cursor:pointer;font-size:15px}
+button{border:1px solid #e8dcc2;background:#fff;border-radius:16px;padding:5px 10px;margin:3px;cursor:pointer;font-size:13px}
 button.on{background:#e06a00;color:#fff;border-color:#e06a00}
-.modebtn{border:2px solid #e06a00;background:#fff;border-radius:20px;padding:8px 16px;margin:4px;font-weight:700}
+.modebtn{border:2px solid #e06a00;background:#fff;border-radius:16px;padding:5px 12px;margin:3px;font-weight:700;font-size:14px}
 .modebtn.on{background:#e06a00;color:#fff}
 .note{background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:14px;margin:16px 0}
 footer{padding:20px;text-align:center;color:#5c5142}
-.updatenote{background:#e8f5e9;border:1px solid #a5d6a7;border-left:5px solid #0a7a2f;border-radius:12px;padding:14px 16px;margin:16px 0;font-size:16px}
+.updatenote{background:#e8f5e9;border:1px solid #a5d6a7;border-top:none;border-left:5px solid #0a7a2f;border-radius:0 0 12px 12px;padding:10px 16px;margin:0 0 12px;font-size:15px}
 .card-petrol{background:#e8f5e9;border-color:#a5d6a7}
 .card-diesel{background:#ffedd5;border-color:#fdba74}
 .card-gold{background:#fff7cc;border-color:#e6c200}
@@ -76,11 +76,11 @@ body[data-sec="fuel"] #panel-metal{display:none}
 body.loaded #loader{opacity:0;pointer-events:none}
 @media(max-width:800px){.layout{flex-direction:column}.sidebar{position:static;width:auto}.sidebar .secwrap{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.secbtn{flex:0 0 auto;width:auto;white-space:nowrap}}
 
-.selbar{background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:12px 14px;margin:16px 0;font-size:16px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
-#chooserTitle{font-size:18px}
+.selbar{display:inline-block;width:auto;background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:7px 12px;margin:10px 0;font-size:15px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
+#chooserTitle{font-size:16px;margin:10px 0 6px}
 body[data-sec="metal"] .fuel-only.legend{display:flex}
 header .wrap{max-width:none;padding:0 16px}
-.maincol{max-width:none;padding:16px}
+.maincol{max-width:none;padding:0 16px 16px}
 </style>
 </head>
 <body data-sec="fuel"><div id="loader"><div class="lmark">₹</div><div style="font-size:20px;font-weight:800">BhavSathi</div><div class="muted">Aaj Ka Rate load ho raha hai…</div></div>
