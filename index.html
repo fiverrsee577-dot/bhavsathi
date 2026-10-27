@@ -23,6 +23,18 @@ button{border:1px solid #e8dcc2;background:#fff;border-radius:20px;padding:8px 1
 button.on{background:#e06a00;color:#fff;border-color:#e06a00}
 .note{background:#fff;border:1px solid #e8dcc2;border-radius:12px;padding:14px;margin:16px 0}
 footer{padding:20px;text-align:center;color:#5c5142}
+.updatenote{background:#e8f5e9;border:1px solid #a5d6a7;border-left:5px solid #0a7a2f;border-radius:12px;padding:14px 16px;margin:16px 0;font-size:16px}
+.card-petrol{background:#e8f5e9;border-color:#a5d6a7}
+.card-diesel{background:#ffedd5;border-color:#fdba74}
+.card-gold{background:#fff7cc;border-color:#e6c200}
+.card-silver{background:#eef0f2;border-color:#c0c5c9}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0;font-size:15px}
+.legend span{display:flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+.dot.green{background:#0a7a2f}
+.dot.orange{background:#e06a00}
+.dot.gold{background:#d4af37}
+.dot.silver{background:#9aa0a6}
 .toprow{display:flex;align-items:center;gap:10px;margin:16px 0;flex-wrap:wrap}
 .top{background:#fff;border:1px solid #e8dcc2;border-radius:14px;padding:12px 16px;min-width:150px;box-shadow:0 2px 10px rgba(90,60,10,.08)}
 .top .big{font-size:28px;font-weight:800}
@@ -34,6 +46,7 @@ footer{padding:20px;text-align:center;color:#5c5142}
 <body>
 <header><div class="wrap"><div class="logo"><div class="mark">₹</div><div><h1>BhavSathi</h1><p style="margin:0">Aaj Ka Rate, ek nazar me</p></div></div></div></header>
 <main class="wrap">
+<div class="updatenote">🕖 <b>Roz subah 7 baje</b> — Petrol aur Diesel ka rate official company ke rate se verify karke BhavSathi par update hota hai.</div>
 <h2>Sabse Sasta — Sabse Mehnga (listed shehron me)</h2>
 <p><b>Petrol:</b></p>
 <div class="toprow">
@@ -63,15 +76,16 @@ footer{padding:20px;text-align:center;color:#5c5142}
 <button data-city="Chandigarh">Chandigarh</button>
 <button data-city="Thiruvananthapuram">Thiruvananthapuram</button>
 </div>
+<div class="legend"><span><i class="dot green"></i>Petrol</span><span><i class="dot orange"></i>Diesel</span><span><i class="dot gold"></i>Sona</span><span><i class="dot silver"></i>Chandi</span></div>
 <h2 id="cityTitle">Delhi — 27 October 2026</h2>
 <div class="cards">
-<div class="card"><small>Petrol / litre</small><div class="price" id="petrol">₹102.12</div><small>Kal se koi badlav nahi</small></div>
-<div class="card"><small>Diesel / litre</small><div class="price" id="diesel">₹95.20</div><small>Kal se koi badlav nahi</small></div>
+<div class="card card-petrol"><small>Petrol / litre</small><div class="price" id="petrol">₹102.12</div><small>Kal se koi badlav nahi</small></div>
+<div class="card card-diesel"><small>Diesel / litre</small><div class="price" id="diesel">₹95.20</div><small>Kal se koi badlav nahi</small></div>
 <div class="card"><small>CNG / kg (Delhi)</small><div class="price" id="cng">₹86.98</div><small>Sheher ke hisab se alag ho sakta hai</small></div>
 <div class="card"><small>PNG Domestic / SCM (Delhi)</small><div class="price">₹50.59</div><small>IGL, 2 Sep 2026 se lagu</small></div>
 <div class="card"><small>LPG Domestic 14.2 kg (Delhi, Oct 2026)</small><div class="price">₹942</div><small>Commercial 19 kg: ₹2,810</small></div>
-<div class="card"><small>Sona 24K / 10 gram</small><div class="price">₹1,44,765</div><small>22K / 10 gram: ₹1,32,605</small></div>
-<div class="card"><small>Chandi / kg</small><div class="price">₹2,00,032</div><small>Source aur sheher par rate thoda alag ho sakta hai</small></div>
+<div class="card card-gold"><small>Sona 24K / 10 gram</small><div class="price">₹1,44,765</div><small>22K / 10 gram: ₹1,32,605</small></div>
+<div class="card card-silver"><small>Chandi / kg</small><div class="price">₹2,00,032</div><small>Source aur sheher par rate thoda alag ho sakta hai</small></div>
 </div>
 <div class="note">
 <b>Note:</b> Ye rate 27 October 2026 ke liye check kiye gaye hain. Petrol/Diesel ke rate sheher ke hisab se badalte hain, sona-chandi ka rate source aur sheher par thoda alag ho sakta hai, aur making charges / GST alag se lagte hain. Kharidne se pehle apne sheher ke pump ya jeweller se rate confirm kar lein.<br><br>
