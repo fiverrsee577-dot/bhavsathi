@@ -63,15 +63,18 @@ button.sharebtn.copy{background:#e06a00;color:#fff;border:none;cursor:pointer}
 .secbtn.on{background:#e06a00;color:#fff;border-color:#e06a00}
 .secbtn small{display:block;font-weight:400;font-size:11px;opacity:.85}
 .sec-panel{display:none;animation:fadein .25s ease}
-body[data-sec="currency"] #panel-currency,body[data-sec="mandi"] #panel-mandi,body[data-sec="khad"] #panel-khad,body[data-sec="bank"] #panel-bank,body[data-sec="metal"] #panel-metal{display:block}
-body[data-sec="currency"] .cards,body[data-sec="mandi"] .cards,body[data-sec="khad"] .cards,body[data-sec="bank"] .cards{display:none}
+body[data-sec="currency"] #panel-currency,body[data-sec="mandi"] #panel-mandi,body[data-sec="khad"] #panel-khad,body[data-sec="bank"] #panel-bank,body[data-sec="metal"] #panel-metal,body[data-sec="fuel"] #panel-fuel{display:block}
 body:not([data-sec="fuel"]) .fuel-only{display:none}
 body[data-sec="metal"] .card[data-sec="fuel"]{display:none}
+body[data-sec="fuel"] .card[data-sec="metal"]{display:none}
 body[data-sec="fuel"] #panel-metal{display:none}
 @keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .rotable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}
 .rotable td,.rotable th{padding:10px 12px;border-bottom:1px solid #eee;text-align:left;font-size:15px}
 .rotable tr:last-child td{border-bottom:none}
+.citytable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}
+.citytable td,.citytable th{padding:10px 12px;border-bottom:1px solid #eee;text-align:left;font-size:15px}
+.citytable tr:last-child td{border-bottom:none}
 .muted{color:#5c5142;font-size:14px}
 #loader{position:fixed;inset:0;background:#fdf6e9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:9999;transition:opacity .4s ease}
 #loader .lmark{width:84px;height:84px;border-radius:20px;background:#e06a00;color:#fff;display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:800;animation:pulse 1.1s ease-in-out infinite}
@@ -164,6 +167,30 @@ button{color:#221a10}
 .rowPlusBtn.plus{background:#dcfce7;color:#15803d;border:2px solid #86efac}
 .rowPlusBtn.tick{background:#15803d;color:#fff;border:2px solid #15803d}
 .rowPlusBtn.tickpop{animation:tickpop .4s ease}
+.js-hidden{display:none!important}
+#editBtn{border:2px solid #e06a00;background:#fff;color:#e06a00;border-radius:16px;padding:8px 18px;font-weight:800;font-size:15px;cursor:pointer}
+#editBtn.on{background:#e06a00;color:#fff}
+#resetBtn{border:2px solid #9a8a6a;background:#fff;color:#5a4632;border-radius:16px;padding:8px 18px;font-weight:800;font-size:15px;cursor:pointer;margin-left:8px}
+#editSecBtn{border:2px solid #e06a00;background:#fff;color:#e06a00;border-radius:16px;padding:8px 18px;font-weight:800;font-size:15px;cursor:pointer}
+#editSecBtn.on{background:#e06a00;color:#fff}
+#resetSecBtn{border:2px solid #9a8a6a;background:#fff;color:#5a4632;border-radius:16px;padding:8px 18px;font-weight:800;font-size:15px;cursor:pointer;margin-left:8px}
+.rowFuelBtn{margin-left:8px;width:26px;height:26px;border-radius:50%;font-size:16px;font-weight:800;cursor:pointer;display:none;vertical-align:middle;align-items:center;justify-content:center}
+.rowFuelBtn.plus{background:#dcfce7;color:#15803d;border:2px solid #86efac}
+.rowFuelBtn.minus{background:#fde8e8;color:#c00;border:2px solid #f5b5b5}
+.rowPlusBtn.minus{background:#fde8e8;color:#c00;border:2px solid #f5b5b5}
+body[data-sec="common"] .fuelbox{display:none}
+body.edit-on[data-sec="common"] .fuelbox{display:flex}
+.fuel-hidden{display:none!important}
+.fuel-removed{opacity:.45}
+.card-faded{opacity:.45}
+.cardAddBtn{position:absolute;top:8px;left:8px;width:30px;height:30px;border-radius:50%;font-size:18px;font-weight:800;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2}
+.cardAddBtn.plus{background:#dcfce7;color:#15803d;border:2px solid #86efac}
+.cardAddBtn.tick{background:#15803d;color:#fff;border:2px solid #15803d}
+.rowMinusBtn{margin-left:8px;width:26px;height:26px;border-radius:50%;font-size:16px;font-weight:800;cursor:pointer;display:none;vertical-align:middle;align-items:center;justify-content:center}
+.rowMinusBtn.minus{background:#fde8e8;color:#c00;border:2px solid #f5b5b5}
+.rowMinusBtn.restore{background:#dcfce7;color:#15803d;border:2px solid #86efac}
+.row-hidden{display:none!important}
+.row-removed{opacity:.45}
 body[data-sec="common"].custom-common .card:not(.custom-card){display:none!important}
 body[data-sec="common"].custom-common .card:not(.custom-card).in-common{display:flex!important}
 body:not([data-sec="common"]) .custom-card{display:none!important}
@@ -389,61 +416,185 @@ body[data-sec="common"] #sectionLegend{display:flex}
 <h2 id="cityTitle" class="fuel-only">Delhi — 28 October 2026</h2>
 <div id="sectionLegend"><b>Colour ka matlab:</b> <span><span class="legdot" style="background:#e0f2fe"></span>Fuel aur Gas</span> <span><span class="legdot" style="background:#ede9fe"></span>Sona-Chandi aur Metal</span> <span><span class="legdot" style="background:#fce7f3"></span>Currency</span> <span><span class="legdot" style="background:#ecfccb"></span>Kisan Mandi</span> <span><span class="legdot" style="background:#f3e8d2"></span>Khad aur Beej</span> <span><span class="legdot" style="background:#dbeafe"></span>Bank aur Bachat</span> <span>Petrol, Diesel, Sona, Chandi apne special colour me hi rahenge.</span></div>
 <div class="cards">
-<div class="card card-petrol" data-common-key="petrol" data-sec="fuel"><small data-lang="cardPetrol">Petrol / litre</small><div class="price" id="petrol">₹102.12</div><small data-lang="noChange">Kal se koi badlav nahi</small></div>
-<div class="card card-diesel" data-common-key="diesel" data-sec="fuel"><small data-lang="cardDiesel">Diesel / litre</small><div class="price" id="diesel">₹95.20</div><small data-lang="noChange">Kal se koi badlav nahi</small></div>
-<div class="card card-cng sec-fuel" data-common-key="cng" data-sec="fuel"><small data-lang="cardCng">CNG / kg (Delhi)</small><div class="price" id="cng">₹86.98</div><small data-lang="cngNote">Sheher ke hisab se alag ho sakta hai</small></div>
-<div class="card card-png sec-fuel" data-common-key="png" data-sec="fuel"><small data-lang="cardPng">PNG Domestic / SCM (Delhi)</small><div class="price">₹50.59</div><small>IGL, 2 Sep 2026 se lagu</small></div>
-<div class="card card-lpg sec-fuel" data-common-key="lpg" data-sec="fuel"><small data-lang="cardLpg">LPG Domestic 14.2 kg (Delhi, Oct 2026)</small><div class="price">₹942</div><small>Commercial 19 kg: ₹2,810</small></div>
+<div class="card card-petrol" data-common-key="petrol" data-fuel-key="petrol" data-sec="fuel"><small data-lang="cardPetrol">Petrol / litre</small><div class="price" id="petrol">₹102.12</div><small data-lang="noChange">Kal se koi badlav nahi</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="powerpetrol" data-fuel-key="powerpetrol" data-sec="fuel"><small>Power Petrol (XP95) / litre (Delhi)</small><div class="price">₹109.24</div><small>Premium petrol, brand ke hisab se alag ho sakta hai</small></div>
+<div class="card card-diesel" data-common-key="diesel" data-fuel-key="diesel" data-sec="fuel"><small data-lang="cardDiesel">Diesel / litre</small><div class="price" id="diesel">₹95.20</div><small data-lang="noChange">Kal se koi badlav nahi</small></div>
+<div class="card card-cng sec-fuel" data-common-key="cng" data-fuel-key="cng" data-sec="fuel"><small data-lang="cardCng">CNG / kg (Delhi)</small><div class="price" id="cng">₹86.98</div><small data-lang="cngNote">Sheher ke hisab se alag ho sakta hai</small></div>
+<div class="card card-lpg sec-fuel" data-common-key="lpg" data-fuel-key="lpg" data-sec="fuel"><small data-lang="cardLpg">LPG Domestic 14.2 kg (Delhi, Oct 2026)</small><div class="price">₹942</div><small>Commercial 19 kg: ₹2,810</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="lpgcomm" data-fuel-key="lpgcomm" data-sec="fuel"><small>LPG Commercial 19 kg (Delhi, Oct 2026)</small><div class="price">₹2,810</div><small>Hotel / dukaan ke liye</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="lpg5kg" data-fuel-key="lpg5kg" data-sec="fuel"><small>LPG 5 kg Domestic (Delhi, Oct 2026)</small><div class="price">₹386</div><small>IndianOil Oct 2026 notification</small></div>
+<div class="card card-png sec-fuel" data-common-key="png" data-fuel-key="png" data-sec="fuel"><small data-lang="cardPng">PNG Domestic / SCM (Delhi)</small><div class="price">₹50.59</div><small>IGL, 2 Sep 2026 se lagu</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="pngcomm" data-fuel-key="pngcomm" data-sec="fuel"><small>PNG Commercial / SCM (Delhi)</small><div class="price">—</div><small>IGL commercial rate verify pending</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="autolpg" data-fuel-key="autolpg" data-sec="fuel"><small>Auto LPG / litre (Delhi, Oct 2026)</small><div class="price">₹62.34</div><small>Gaadi ke liye LPG</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="kerosene" data-fuel-key="kerosene" data-sec="fuel"><small>Kerosene / litre (Delhi)</small><div class="price">—</div><small>Delhi retail rate verify pending</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="lpg10kg" data-fuel-key="lpg10kg" data-sec="fuel"><small>LPG 10 kg Composite (Delhi, Oct 2026)</small><div class="price">₹750.50</div><small>IndianOil Oct 2026 notification</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="lpg475kg" data-fuel-key="lpg475kg" data-sec="fuel"><small>LPG 47.5 kg Commercial (Delhi, Oct 2026)</small><div class="price">₹7,781</div><small>IndianOil Oct 2026 notification</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="lpg5kgftl" data-fuel-key="lpg5kgftl" data-sec="fuel"><small>LPG 5 kg FTL Market (Delhi, Oct 2026)</small><div class="price">₹779.50</div><small>Free Trade LPG, market rate</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="premdiesel" data-fuel-key="premdiesel" data-sec="fuel"><small>Premium Diesel (XtraGreen) / litre (Delhi)</small><div class="price">—</div><small>Brand/station ke hisab se rate alag</small></div>
+<div class="card sec-fuel fuelbox" data-common-key="xp100" data-fuel-key="xp100" data-sec="fuel"><small>XP100 Petrol (100-octane) / litre (Delhi)</small><div class="price">—</div><small>100-octane premium, rate station ke hisab se alag</small></div>
 <div class="card card-gold" data-common-key="gold" data-sec="metal"><small data-lang="cardGold">Sona 24K / 10 gram</small><div class="price">₹1,43,300</div><small>22K / 10 gram: ₹1,31,360</small></div>
-<div class="card card-silver" data-common-key="silver" data-sec="metal"><small data-lang="cardSilver">Chandi / kg</small><div class="price">₹2,01,238</div><small data-lang="silverNote">Source aur sheher par rate thoda alag ho sakta hai</small></div>
-<div class="card card-dollar sec-currency" data-common-key="dollar" data-sec="currency"><small data-lang="cardDollar">Dollar (USD) / ₹</small><div class="price">₹95.12</div><small>1 USD = ₹95.12, 27 Oct 2026 close</small></div>
+<div class="card card-silver" data-common-key="silver" data-sec="metal"><small data-lang="cardSilver">Chandi / kg</small><div class="price">₹2,00,036</div><small data-lang="silverNote">Source aur sheher par rate thoda alag ho sakta hai</small></div>
+<div class="card card-dollar sec-currency" data-common-key="dollar" data-sec="currency" data-row-label="US Dollar (USD)"><small data-lang="cardDollar">Dollar (USD) / ₹</small><div class="price">₹95.12</div><small>1 USD = ₹95.12, 27 Oct 2026 (prev. day)</small></div>
+<div class="card sec-metal" data-common-key="g24gram" data-sec="metal" data-row-label="Gold 24K — per gram"><small>Gold 24K — per gram</small><div class="price">₹14,330</div><small>(hisab se)</small></div>
+<div class="card sec-metal" data-common-key="g24pavan" data-sec="metal" data-row-label="Gold 24K — per pavan (8 g)"><small>Gold 24K — per pavan (8 g)</small><div class="price">₹1,14,640</div><small>(hisab se)</small></div>
+<div class="card sec-metal" data-common-key="g24tola" data-sec="metal" data-row-label="Gold 24K — per tola (11.66 g)"><small>Gold 24K — per tola (11.66 g)</small><div class="price">₹1,67,088</div><small>(hisab se)</small></div>
+<div class="card sec-metal" data-common-key="g22gram" data-sec="metal" data-row-label="Gold 22K — per gram"><small>Gold 22K — per gram</small><div class="price">₹13,136</div><small>(hisab se)</small></div>
+<div class="card sec-metal" data-common-key="g22pavan" data-sec="metal" data-row-label="Gold 22K — per pavan (8 g)"><small>Gold 22K — per pavan (8 g)</small><div class="price">₹1,05,088</div><small>(hisab se)</small></div>
+<div class="card sec-metal" data-common-key="g22tola" data-sec="metal" data-row-label="Gold 22K — per tola (11.66 g)"><small>Gold 22K — per tola (11.66 g)</small><div class="price">₹1,53,166</div><small>(hisab se)</small></div>
+<div class="card sec-metal" data-common-key="g18_10g" data-sec="metal" data-row-label="Gold 18K — / 10 gram"><small>Gold 18K — / 10 gram</small><div class="price">₹1,07,480</div><small>(Groww, 28 Oct 2026)</small></div>
+<div class="card sec-metal" data-common-key="g18gram" data-sec="metal" data-row-label="Gold 18K — per gram"><small>Gold 18K — per gram</small><div class="price">₹10,748</div><small>(hisab se)</small></div>
+<div class="card sec-metal" data-common-key="chandigram" data-sec="metal" data-row-label="Chandi — per gram"><small>Chandi — per gram</small><div class="price">₹200.04</div><small>(hisab se)</small></div>
+<div class="card sec-metal" data-common-key="copper" data-sec="metal" data-row-label="Copper / kg"><small>Copper / kg</small><div class="price">₹1,397.25</div><small>(MCX futures, wholesale ref, 28 Oct 2026)</small></div>
+<div class="card sec-metal" data-common-key="aluminium" data-sec="metal" data-row-label="Aluminium / kg"><small>Aluminium / kg</small><div class="price">₹332.40</div><small>(MCX futures, wholesale ref, 28 Oct 2026)</small></div>
+<div class="card sec-metal" data-common-key="zinc" data-sec="metal" data-row-label="Zinc / kg"><small>Zinc / kg</small><div class="price">₹419.00</div><small>(MCX futures, wholesale ref, 28 Oct 2026)</small></div>
+<div class="card sec-metal" data-common-key="lead" data-sec="metal" data-row-label="Lead / kg"><small>Lead / kg</small><div class="price">₹197.50</div><small>(MCX futures, wholesale ref, 28 Oct 2026)</small></div>
+<div class="card sec-metal" data-common-key="nickel" data-sec="metal" data-row-label="Nickel / kg"><small>Nickel / kg</small><div class="price">₹1,497.00</div><small>(MCX futures, wholesale ref, 28 Oct 2026)</small></div>
+<div class="card sec-metal" data-common-key="platinum" data-sec="metal" data-row-label="Platinum / 10 g"><small>Platinum / 10 g</small><div class="price">₹46,770</div><small>(GoodReturns, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="eur" data-sec="currency" data-row-label="Euro (EUR)"><small>Euro (EUR)</small><div class="price">₹105.78</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="gbp" data-sec="currency" data-row-label="British Pound (GBP)"><small>British Pound (GBP)</small><div class="price">₹126.49</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="aed" data-sec="currency" data-row-label="UAE Dirham (AED)"><small>UAE Dirham (AED)</small><div class="price">₹25.89</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="sar" data-sec="currency" data-row-label="Saudi Riyal (SAR)"><small>Saudi Riyal (SAR)</small><div class="price">₹25.35</div><small>(28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="kwd" data-sec="currency" data-row-label="Kuwaiti Dinar (KWD)"><small>Kuwaiti Dinar (KWD)</small><div class="price">₹305.88</div><small>(28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="qar" data-sec="currency" data-row-label="Qatar Riyal (QAR)"><small>Qatar Riyal (QAR)</small><div class="price">₹26.04</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="bhd" data-sec="currency" data-row-label="Bahrain Dinar (BHD)"><small>Bahrain Dinar (BHD)</small><div class="price">₹251.51</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="omr" data-sec="currency" data-row-label="Oman Rial (OMR)"><small>Oman Rial (OMR)</small><div class="price">₹247.36</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="sgd" data-sec="currency" data-row-label="Singapore Dollar (SGD)"><small>Singapore Dollar (SGD)</small><div class="price">₹74.19</div><small>(28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="aud" data-sec="currency" data-row-label="Australian Dollar (AUD)"><small>Australian Dollar (AUD)</small><div class="price">₹66.90</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="cad" data-sec="currency" data-row-label="Canadian Dollar (CAD)"><small>Canadian Dollar (CAD)</small><div class="price">₹67.66</div><small>(28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="jpy" data-sec="currency" data-row-label="Japanese Yen (JPY, per 100)"><small>Japanese Yen (JPY, per 100)</small><div class="price">₹60.22</div><small>(hisab se, per 100, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="cny" data-sec="currency" data-row-label="Chinese Yuan (CNY)"><small>Chinese Yuan (CNY)</small><div class="price">₹14.26</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="thb" data-sec="currency" data-row-label="Thai Baht (THB)"><small>Thai Baht (THB)</small><div class="price">₹2.81</div><small>(28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="myr" data-sec="currency" data-row-label="Malaysian Ringgit (MYR)"><small>Malaysian Ringgit (MYR)</small><div class="price">₹23.30</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="hkd" data-sec="currency" data-row-label="Hong Kong Dollar (HKD)"><small>Hong Kong Dollar (HKD)</small><div class="price">₹12.14</div><small>(28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="nzd" data-sec="currency" data-row-label="New Zealand Dollar (NZD)"><small>New Zealand Dollar (NZD)</small><div class="price">₹53.39</div><small>(hisab se, 28 Oct 2026)</small></div>
+<div class="card sec-currency" data-common-key="chf" data-sec="currency" data-row-label="Swiss Franc (CHF)"><small>Swiss Franc (CHF)</small><div class="price">₹114.89</div><small>(28 Oct 2026)</small></div>
+<div class="card sec-mandi" data-common-key="pyaaz" data-sec="mandi" data-row-label="Pyaaz"><small>Pyaaz</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="aloo" data-sec="mandi" data-row-label="Aloo"><small>Aloo</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="tamatar" data-sec="mandi" data-row-label="Tamatar"><small>Tamatar</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="gehu" data-sec="mandi" data-row-label="Gehu"><small>Gehu</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="dhan" data-sec="mandi" data-row-label="Chawal (Dhan)"><small>Chawal (Dhan)</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="sarson" data-sec="mandi" data-row-label="Sarson"><small>Sarson</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="soyabean" data-sec="mandi" data-row-label="Soyabean"><small>Soyabean</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="kapas" data-sec="mandi" data-row-label="Kapas"><small>Kapas</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="makka" data-sec="mandi" data-row-label="Makka"><small>Makka</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="bajra" data-sec="mandi" data-row-label="Bajra"><small>Bajra</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="chana" data-sec="mandi" data-row-label="Chana"><small>Chana</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="jowar" data-sec="mandi" data-row-label="Jowar"><small>Jowar</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="arhar" data-sec="mandi" data-row-label="Arhar / Tur"><small>Arhar / Tur</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="moong" data-sec="mandi" data-row-label="Moong"><small>Moong</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="masoor" data-sec="mandi" data-row-label="Masoor"><small>Masoor</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="haldi" data-sec="mandi" data-row-label="Haldi"><small>Haldi</small><div class="price">—</div><small></small></div>
+<div class="card sec-mandi" data-common-key="mirchi" data-sec="mandi" data-row-label="Mirchi (Sukhi)"><small>Mirchi (Sukhi)</small><div class="price">—</div><small></small></div>
+<div class="card sec-khad" data-common-key="urea" data-sec="khad" data-row-label="Urea (45 kg bag)"><small>Urea (45 kg bag)</small><div class="price">₹266.50</div><small>(MRP incl. GST, unchanged since Mar 2018)</small></div>
+<div class="card sec-khad" data-common-key="dap" data-sec="khad" data-row-label="DAP (50 kg bag)"><small>DAP (50 kg bag)</small><div class="price">₹1,350</div><small>(Rabi 2026, subsidised)</small></div>
+<div class="card sec-khad" data-common-key="npk102626" data-sec="khad" data-row-label="NPK 10:26:26"><small>NPK 10:26:26</small><div class="price">₹1,814.82</div><small>(Rabi 2025-26 avg)</small></div>
+<div class="card sec-khad" data-common-key="npk123216" data-sec="khad" data-row-label="NPK 12:32:16"><small>NPK 12:32:16</small><div class="price">₹1,711.87</div><small>(Rabi 2025-26 avg)</small></div>
+<div class="card sec-khad" data-common-key="mop" data-sec="khad" data-row-label="MOP / Potash"><small>MOP / Potash</small><div class="price">₹1,710.54</div><small>(Rabi 2025-26 avg)</small></div>
+<div class="card sec-khad" data-common-key="ssp" data-sec="khad" data-row-label="SSP"><small>SSP</small><div class="price">₹505.84</div><small>(2025-26 MRP)</small></div>
+<div class="card sec-khad" data-common-key="nanourea" data-sec="khad" data-row-label="Nano Urea (500 ml)"><small>Nano Urea (500 ml)</small><div class="price">₹240</div><small>(IFFCO 500 ml)</small></div>
+<div class="card sec-khad" data-common-key="sulphururea" data-sec="khad" data-row-label="Sulphur-coated Urea (Urea Gold, 40 kg bag)"><small>Sulphur-coated Urea (Urea Gold, 40 kg bag)</small><div class="price">₹254</div><small>(w.e.f. 23 Jan 2026)</small></div>
+<div class="card sec-khad" data-common-key="gehubej-haryana" data-sec="khad" data-row-label="Gehu Beej — Haryana (farmer)"><small>Gehu Beej — Haryana (farmer)</small><div class="price">₹2,700</div><small>/ quintal, farmer, Rabi 2026-27</small></div>
+    <div class="card sec-khad" data-common-key="gehubej-punjab" data-sec="khad" data-row-label="Gehu Beej — Punjab (farmer)"><small>Gehu Beej — Punjab (farmer)</small><div class="price">₹2,250</div><small>/ quintal, farmer, Rabi 2026-27</small></div>
+<div class="card sec-khad" data-common-key="dhanbeej" data-sec="khad" data-row-label="Dhan Beej (seasonal)"><small>Dhan Beej (seasonal)</small><div class="price">—</div><small></small></div>
+<div class="card sec-bank" data-common-key="ppf" data-sec="bank" data-row-label="PPF"><small>PPF</small><div class="price">7.10%</div><small></small></div>
+<div class="card sec-bank" data-common-key="sukanya" data-sec="bank" data-row-label="Sukanya Samriddhi"><small>Sukanya Samriddhi</small><div class="price">8.20%</div><small></small></div>
+<div class="card sec-bank" data-common-key="nsc" data-sec="bank" data-row-label="NSC"><small>NSC</small><div class="price">7.70%</div><small></small></div>
+<div class="card sec-bank" data-common-key="scss" data-sec="bank" data-row-label="Senior Citizens (SCSS)"><small>Senior Citizens (SCSS)</small><div class="price">8.20%</div><small></small></div>
+<div class="card sec-bank" data-common-key="kvp" data-sec="bank" data-row-label="Kisan Vikas Patra (KVP)"><small>Kisan Vikas Patra (KVP)</small><div class="price">7.50%</div><small>(115 mahine)</small></div>
+<div class="card sec-bank" data-common-key="pomis" data-sec="bank" data-row-label="Post Office Monthly Income"><small>Post Office Monthly Income</small><div class="price">7.40%</div><small></small></div>
+<div class="card sec-bank" data-common-key="posttd" data-sec="bank" data-row-label="Post Office Time Deposit 1 / 2 / 3 / 5 saal"><small>Post Office Time Deposit 1 / 2 / 3 / 5 saal</small><div class="price">6.90%</div><small>/ 7.00% / 7.10% / 7.50%</small></div>
+<div class="card sec-bank" data-common-key="postrd" data-sec="bank" data-row-label="Post Office Recurring Deposit"><small>Post Office Recurring Deposit</small><div class="price">6.70%</div><small></small></div>
+<div class="card sec-bank" data-common-key="postsav" data-sec="bank" data-row-label="Post Office Savings"><small>Post Office Savings</small><div class="price">4.00%</div><small></small></div>
+<div class="card sec-bank" data-common-key="repo" data-sec="bank" data-row-label="Repo Rate (RBI)"><small>Repo Rate (RBI)</small><div class="price">5.50%</div><small></small></div>
+<div class="card sec-bank" data-common-key="epf" data-sec="bank" data-row-label="EPF (FY26, saal me ek baar)"><small>EPF (FY26, saal me ek baar)</small><div class="price">8.25%</div><small></small></div>
+</div>
 </div>
 
+<div class="sec-panel" id="panel-fuel">
+<h2>Fuel aur Gas — poori list (Delhi reference)</h2>
+<p class="muted">Final list ke 16 item ek jagah (11 purane + 5 naye, Oct 2026). Ye list hamesha poori rahegi — upar ke box se koi item hatane par bhi list se nahi hatega. Edit Fuel Items dabakar list se + / − karke upar ke box badle ja sakte hain.</p>
+<table class="rotable">
+<tr><th>Item</th><th>Rate</th></tr>
+<tr data-fuel-key="petrol"><td>Petrol — / litre (Delhi)</td><td>₹102.12</td></tr>
+<tr data-fuel-key="powerpetrol"><td>Power Petrol (XP95) — / litre (Delhi)</td><td>₹109.24</td></tr>
+<tr data-fuel-key="diesel"><td>Diesel — / litre (Delhi)</td><td>₹95.20</td></tr>
+<tr data-fuel-key="cng"><td>CNG — / kg (Delhi)</td><td>₹86.98</td></tr>
+<tr data-fuel-key="lpg"><td>LPG Domestic 14.2 kg (Delhi, Oct 2026)</td><td>₹942</td></tr>
+<tr data-fuel-key="lpgcomm"><td>LPG Commercial 19 kg (Delhi, Oct 2026)</td><td>₹2,810</td></tr>
+<tr data-fuel-key="lpg5kg"><td>LPG 5 kg Domestic (Delhi, Oct 2026)</td><td>₹386</td></tr>
+<tr data-fuel-key="png"><td>PNG Domestic — / SCM (Delhi, IGL)</td><td>₹50.59</td></tr>
+<tr data-fuel-key="pngcomm"><td>PNG Commercial — / SCM (Delhi)</td><td>—</td></tr>
+<tr data-fuel-key="autolpg"><td>Auto LPG — / litre (Delhi, Oct 2026)</td><td>₹62.34</td></tr>
+<tr data-fuel-key="kerosene"><td>Kerosene — / litre (Delhi)</td><td>—</td></tr>
+<tr data-fuel-key="lpg10kg"><td>LPG 10 kg Composite (Delhi, Oct 2026)</td><td>₹750.50</td></tr>
+<tr data-fuel-key="lpg475kg"><td>LPG 47.5 kg Commercial (Delhi, Oct 2026)</td><td>₹7,781</td></tr>
+<tr data-fuel-key="lpg5kgftl"><td>LPG 5 kg FTL Market (Delhi, Oct 2026)</td><td>₹779.50</td></tr>
+<tr data-fuel-key="premdiesel"><td>Premium Diesel (XtraGreen) — / litre (Delhi)</td><td>—</td></tr>
+<tr data-fuel-key="xp100"><td>XP100 Petrol (100-octane) — / litre (Delhi)</td><td>—</td></tr>
+</table>
+<p class="muted">Source: Power Petrol XP95 — Oct 2026 listings (Delhi ₹109.24); Auto LPG — petroldieselprice Delhi, Oct 2026 (₹62.34); LPG Commercial 19 kg — 1 Oct 2026 revision, Delhi ₹2,810 (Mumbai ₹2,764, Kolkata ₹2,954, Chennai ₹2,983, Bengaluru ₹2,898 — sheher ke hisab se alag); LPG 5 kg Domestic ₹386, 10 kg Composite ₹750.50, 47.5 kg Commercial ₹7,781 — IndianOil Oct 2026 notification; LPG 5 kg FTL ₹779.50 — Oct 2026 market rate (bina connection wala FTL, domestic rate se alag); baaki rate pehle wale source hi hain. “—” matlab rate abhi verify nahi hua hai: PNG Commercial ka ek single IGL rate nahi mila; Kerosene Delhi me PDS se band hai (Delhi 2017 se kerosene-free), isliye Delhi retail rate nahi hai; Premium Diesel aur XP100 ke rate brand/station ke hisab se alag hote hain, isliye ek single Delhi rate verify pending hai.</p>
+</div>
 <div class="sec-panel" id="panel-metal">
 <h2 data-lang="panelMetal">Sona-Chandi aur Metal — 28 October 2026</h2>
 <p class="muted"><span data-lang="selCity">Chuna hua sheher:</span> <b class="selCity">Delhi</b></p>
-<p class="muted">Sona ka rate Groww, 28 Oct 2026 se hai. Neeche wali unit isi rate ka hisab hai, alag rate nahi.</p>
+<p class="muted">Sona ka rate Groww, 28 Oct 2026 se hai. Chandi headline All India Bullion Delhi, 28 Oct 2026 subah 07:38 (₹2,00,036) se hai. Neeche wali unit isi rate ka hisab hai, alag rate nahi.</p>
 <table class="rotable">
 <tr><th data-lang="itemCol">Item</th><th data-lang="rateCol">Rate</th></tr>
-<tr><td>Gold 24K — per gram</td><td>₹14,330 (hisab se)</td></tr>
-<tr><td>Gold 24K — per pavan (8 g)</td><td>₹1,14,640 (hisab se)</td></tr>
-<tr><td>Gold 24K — per tola (11.66 g)</td><td>₹1,67,088 (hisab se)</td></tr>
-<tr><td>Gold 22K — per gram</td><td>₹13,136 (hisab se)</td></tr>
-<tr><td>Copper / kg</td><td>—</td></tr>
-<tr><td>Aluminium / kg</td><td>—</td></tr>
-<tr><td>Zinc / kg</td><td>—</td></tr>
-<tr><td>Lead / kg</td><td>—</td></tr>
-<tr><td>Nickel / kg</td><td>—</td></tr>
-<tr><td>Platinum / 10 g</td><td>—</td></tr>
+<tr data-common-key="g24gram"><td>Gold 24K — per gram</td><td>₹14,330 (hisab se)</td></tr>
+<tr data-common-key="g24pavan"><td>Gold 24K — per pavan (8 g)</td><td>₹1,14,640 (hisab se)</td></tr>
+<tr data-common-key="g24tola"><td>Gold 24K — per tola (11.66 g)</td><td>₹1,67,088 (hisab se)</td></tr>
+<tr data-common-key="g22gram"><td>Gold 22K — per gram</td><td>₹13,136 (hisab se)</td></tr>
+<tr data-common-key="g22pavan"><td>Gold 22K — per pavan (8 g)</td><td>₹1,05,088 (hisab se)</td></tr>
+<tr data-common-key="g22tola"><td>Gold 22K — per tola (11.66 g)</td><td>₹1,53,166 (hisab se)</td></tr>
+<tr data-common-key="g18_10g"><td>Gold 18K — / 10 gram</td><td>₹1,07,480 (Groww, 28 Oct 2026)</td></tr>
+<tr data-common-key="g18gram"><td>Gold 18K — per gram</td><td>₹10,748 (hisab se)</td></tr>
+<tr data-common-key="chandigram"><td>Chandi — per gram</td><td>₹200.04 (hisab se)</td></tr>
+<tr data-common-key="copper"><td>Copper / kg</td><td>₹1,397.25 (MCX futures, wholesale ref, 28 Oct 2026)</td></tr>
+<tr data-common-key="aluminium"><td>Aluminium / kg</td><td>₹332.40 (MCX futures, wholesale ref, 28 Oct 2026)</td></tr>
+<tr data-common-key="zinc"><td>Zinc / kg</td><td>₹419.00 (MCX futures, wholesale ref, 28 Oct 2026)</td></tr>
+<tr data-common-key="lead"><td>Lead / kg</td><td>₹197.50 (MCX futures, wholesale ref, 28 Oct 2026)</td></tr>
+<tr data-common-key="nickel"><td>Nickel / kg</td><td>₹1,497.00 (MCX futures, wholesale ref, 28 Oct 2026)</td></tr>
+<tr data-common-key="platinum"><td>Platinum / 10 g</td><td>₹46,770 (GoodReturns, 28 Oct 2026)</td></tr>
 </table>
-<p class="muted">“—” matlab is draft me rate abhi verify nahi hua hai, guess karke nahi dala gaya hai. Live karne se pehle verify karke dala jayega.</p>
+<h3 style="margin:16px 0 8px">Sona-Chandi — sheher-wise rate (28 Oct 2026)</h3>
+<table class="citytable">
+<tr><th>Sheher</th><th>Sona 24K / 10 g</th><th>Sona 22K / 10 g</th><th>Sona 18K / 10 g</th><th>Chandi / kg</th></tr>
+<tr><td>Delhi</td><td>₹1,43,450</td><td>₹1,31,510</td><td>₹1,07,630</td><td>₹2,00,036</td></tr>
+<tr><td>Mumbai</td><td>₹1,43,300</td><td>₹1,31,360</td><td>₹1,07,580</td><td>₹1,99,961</td></tr>
+<tr><td>Chennai</td><td>₹1,43,300</td><td>₹1,31,360</td><td>₹1,07,510</td><td>₹2,00,061</td></tr>
+<tr><td>Kolkata</td><td>₹1,43,300</td><td>₹1,31,360</td><td>₹1,07,580</td><td>₹2,00,083</td></tr>
+<tr><td>Bengaluru</td><td>₹1,43,300</td><td>₹1,31,360</td><td>₹1,07,580</td><td>₹2,00,121</td></tr>
+<tr><td>Lucknow</td><td>₹1,43,450</td><td>₹1,31,510</td><td>₹1,07,630</td><td>—</td></tr>
+</table>
+<p class="muted">Source: Sona sheher-wise — Goodreturns city listings, 28 Oct 2026 (Kolkata/Bengaluru ki 18K bhi Goodreturns se hai); Chandi sheher-wise — All India Bullion, 28 Oct 2026 subah 07:38 (Lucknow us table me nahi mila, isliye —). Headline Sona (Groww ₹1,43,300) aur Chandi (AIB 07:38 IST ₹2,00,036) se thoda farak ho sakta hai kyunki source aur time alag hai. GST/making charges alag se lagte hain.</p>
+<p class="muted">“—” matlab is draft me rate abhi verify nahi hua hai, guess karke nahi dala gaya hai. Live karne se pehle verify karke dala jayega. Base metal (Copper, Aluminium, Zinc, Lead, Nickel) ka koi retail board rate nahi hai — ye MCX futures ka wholesale reference hai, dukaan ka rate nahi.</p>
 </div>
 <div class="sec-panel" id="panel-currency">
-<h2 data-lang="panelCurrency">Currency — 1 unit = ₹ me (FBIL reference, weekdays)</h2>
+<h2 data-lang="panelCurrency">Currency — 1 unit = ₹ me (28 Oct 2026, mid-market)</h2>
 <p class="muted"><span data-lang="selCity">Chuna hua sheher:</span> <b class="selCity">Delhi</b></p>
 <table class="rotable">
-<tr><th>Currency</th><th>Rate</th></tr>
-<tr><td>US Dollar (USD)</td><td>₹95.12 (27 Oct 2026 close)</td></tr>
-<tr><td>Euro (EUR)</td><td>—</td></tr>
-<tr><td>British Pound (GBP)</td><td>—</td></tr>
-<tr><td>UAE Dirham (AED)</td><td>—</td></tr>
-<tr><td>Saudi Riyal (SAR)</td><td>—</td></tr>
-<tr><td>Kuwaiti Dinar (KWD)</td><td>—</td></tr>
-<tr><td>Qatar Riyal (QAR)</td><td>—</td></tr>
-<tr><td>Bahrain Dinar (BHD)</td><td>—</td></tr>
-<tr><td>Oman Rial (OMR)</td><td>—</td></tr>
-<tr><td>Singapore Dollar (SGD)</td><td>—</td></tr>
-<tr><td>Australian Dollar (AUD)</td><td>—</td></tr>
-<tr><td>Canadian Dollar (CAD)</td><td>—</td></tr>
-<tr><td>Japanese Yen (JPY, per 100)</td><td>—</td></tr>
-<tr><td>Chinese Yuan (CNY)</td><td>—</td></tr>
-<tr><td>Thai Baht (THB)</td><td>—</td></tr>
-<tr><td>Malaysian Ringgit (MYR)</td><td>—</td></tr>
-<tr><td>Hong Kong Dollar (HKD)</td><td>—</td></tr>
-<tr><td>New Zealand Dollar (NZD)</td><td>—</td></tr>
-<tr><td>Swiss Franc (CHF)</td><td>—</td></tr>
+<tr><th>Currency</th><th>Rate</th><th>Updated on</th></tr>
+<tr data-common-key="dollar"><td>US Dollar (USD)</td><td>₹95.12</td><td>27 Oct 2026 (prev. day)</td></tr>
+<tr data-common-key="eur"><td>Euro (EUR)</td><td>₹105.78</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="gbp"><td>British Pound (GBP)</td><td>₹126.49</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="aed"><td>UAE Dirham (AED)</td><td>₹25.89</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="sar"><td>Saudi Riyal (SAR)</td><td>₹25.35</td><td>28 Oct 2026</td></tr>
+<tr data-common-key="kwd"><td>Kuwaiti Dinar (KWD)</td><td>₹305.88</td><td>28 Oct 2026</td></tr>
+<tr data-common-key="qar"><td>Qatar Riyal (QAR)</td><td>₹26.04</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="bhd"><td>Bahrain Dinar (BHD)</td><td>₹251.51</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="omr"><td>Oman Rial (OMR)</td><td>₹247.36</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="sgd"><td>Singapore Dollar (SGD)</td><td>₹74.19</td><td>28 Oct 2026</td></tr>
+<tr data-common-key="aud"><td>Australian Dollar (AUD)</td><td>₹66.90</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="cad"><td>Canadian Dollar (CAD)</td><td>₹67.66</td><td>28 Oct 2026</td></tr>
+<tr data-common-key="jpy"><td>Japanese Yen (JPY, per 100)</td><td>₹60.22</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="cny"><td>Chinese Yuan (CNY)</td><td>₹14.26</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="thb"><td>Thai Baht (THB)</td><td>₹2.81</td><td>28 Oct 2026</td></tr>
+<tr data-common-key="myr"><td>Malaysian Ringgit (MYR)</td><td>₹23.30</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="hkd"><td>Hong Kong Dollar (HKD)</td><td>₹12.14</td><td>28 Oct 2026</td></tr>
+<tr data-common-key="nzd"><td>New Zealand Dollar (NZD)</td><td>₹53.39</td><td>28 Oct 2026 (hisab se)</td></tr>
+<tr data-common-key="chf"><td>Swiss Franc (CHF)</td><td>₹114.89</td><td>28 Oct 2026</td></tr>
 </table>
-<p class="muted">Dollar ka rate 27 Oct 2026 close se verify karke dala gaya hai; baaki currency ke rate abhi “—” hain, guess nahi.</p>
+<p class="muted">Dollar 27 Oct 2026 ka pichhle din wala rate (₹95.12) hai — "close" wali labelling confirm nahi hui, isliye "prev. day" likha hai; 28 Oct ka close shaam ko aayega, tab update hoga. Ye subah ke mid-market snapshot hain, final close shaam ko aata hai. Baaki 18 currency 28 Oct 2026 ke mid-market rate hain: direct quote jahan mila wahan direct rate, baaki USD cross-rate se hisab (jin par “hisab se” likha hai). Bank ya exchange counter par charges ke hisab se rate thoda alag ho sakta hai.</p>
 </div>
 <div class="sec-panel" id="panel-mandi">
 <h2 data-lang="panelMandi">Kisan Mandi — Wholesale bhav / quintal (mandi-wise)</h2>
@@ -451,33 +602,35 @@ body[data-sec="common"] #sectionLegend{display:flex}
 <p class="muted">Ye dukaan ka retail rate nahi hai, mandi ka wholesale bhav hai. Rate mandi aur din ke hisab se alag ho sakta hai.</p>
 <table class="rotable">
 <tr><th>Fasal</th><th>Bhav / quintal</th></tr>
-<tr><td>Pyaaz</td><td>—</td></tr><tr><td>Aloo</td><td>—</td></tr><tr><td>Tamatar</td><td>—</td></tr>
-<tr><td>Gehu</td><td>—</td></tr><tr><td>Chawal (Dhan)</td><td>—</td></tr>
-<tr><td>Sarson</td><td>—</td></tr><tr><td>Soyabean</td><td>—</td></tr>
-<tr><td>Kapas</td><td>—</td></tr><tr><td>Makka</td><td>—</td></tr><tr><td>Bajra</td><td>—</td></tr>
-<tr><td>Chana</td><td>—</td></tr><tr><td>Jowar</td><td>—</td></tr>
-<tr><td>Arhar / Tur</td><td>—</td></tr><tr><td>Moong</td><td>—</td></tr>
-<tr><td>Masoor</td><td>—</td></tr><tr><td>Haldi</td><td>—</td></tr><tr><td>Mirchi (Sukhi)</td><td>—</td></tr>
+<tr data-common-key="pyaaz"><td>Pyaaz</td><td>—</td></tr><tr data-common-key="aloo"><td>Aloo</td><td>—</td></tr><tr data-common-key="tamatar"><td>Tamatar</td><td>—</td></tr>
+<tr data-common-key="gehu"><td>Gehu</td><td>—</td></tr><tr data-common-key="dhan"><td>Chawal (Dhan)</td><td>—</td></tr>
+<tr data-common-key="sarson"><td>Sarson</td><td>—</td></tr><tr data-common-key="soyabean"><td>Soyabean</td><td>—</td></tr>
+<tr data-common-key="kapas"><td>Kapas</td><td>—</td></tr><tr data-common-key="makka"><td>Makka</td><td>—</td></tr><tr data-common-key="bajra"><td>Bajra</td><td>—</td></tr>
+<tr data-common-key="chana"><td>Chana</td><td>—</td></tr><tr data-common-key="jowar"><td>Jowar</td><td>—</td></tr>
+<tr data-common-key="arhar"><td>Arhar / Tur</td><td>—</td></tr><tr data-common-key="moong"><td>Moong</td><td>—</td></tr>
+<tr data-common-key="masoor"><td>Masoor</td><td>—</td></tr><tr data-common-key="haldi"><td>Haldi</td><td>—</td></tr><tr data-common-key="mirchi"><td>Mirchi (Sukhi)</td><td>—</td></tr>
 </table>
-<p class="muted">Draft me mandi rate “—” hai, kyunki aaj ka Agmarknet modal rate abhi is draft me verify karke nahi dala gaya hai.</p>
+<p class="muted">28 Oct 2026 ka mandi-wise modal rate ek hi verified table me nahi mila — har mandi ka rate alag hota hai, aur purani khabron ke rate ko aaj ka batakar dalna galat hoga, isliye sab “—” rakha hai, guess nahi dala gaya. Upar box + neeche list ka structure bana diya gaya hai; rate Agmarknet/eNAM se mandi-wise verify karke hi dala jayega.</p>
 </div>
 <div class="sec-panel" id="panel-khad">
 <h2 data-lang="panelKhad">Khad aur Beej — Seasonal rate (roz ka rate nahi)</h2>
 <p class="muted"><span data-lang="selCity">Chuna hua sheher:</span> <b class="selCity">Delhi</b></p>
 <p class="muted">Khad ka rate NBS season me badalta hai, roz nahi. Beej ka rate bhi sowing season ka catalogue rate hota hai.</p>
 <table class="rotable">
-<tr><th data-lang="itemCol">Item</th><th data-lang="rateCol">Rate</th></tr>
-<tr><td>Urea (45 kg bag)</td><td>—</td></tr>
-<tr><td>DAP (50 kg bag)</td><td>₹1,350 (Kharif 2026, subsidised)</td></tr>
-<tr><td>NPK 10:26:26</td><td>—</td></tr>
-<tr><td>NPK 12:32:16</td><td>—</td></tr>
-<tr><td>MOP / Potash</td><td>—</td></tr>
-<tr><td>SSP</td><td>—</td></tr>
-<tr><td>Nano Urea (500 ml)</td><td>—</td></tr>
-<tr><td>Sulphur-coated Urea</td><td>—</td></tr>
-<tr><td>Gehu Beej (seasonal)</td><td>—</td></tr>
-<tr><td>Dhan Beej (seasonal)</td><td>—</td></tr>
+<tr><th data-lang="itemCol">Item</th><th data-lang="rateCol">Rate</th><th>Type</th></tr>
+<tr data-common-key="urea"><td>Urea (45 kg bag)</td><td>₹266.50</td><td>MRP incl. GST, unchanged since Mar 2018</td></tr>
+<tr data-common-key="dap"><td>DAP (50 kg bag)</td><td>₹1,350</td><td>Rabi 2026, subsidised</td></tr>
+<tr data-common-key="npk102626"><td>NPK 10:26:26</td><td>₹1,814.82</td><td>Rabi 2025-26 avg</td></tr>
+<tr data-common-key="npk123216"><td>NPK 12:32:16</td><td>₹1,711.87</td><td>Rabi 2025-26 avg</td></tr>
+<tr data-common-key="mop"><td>MOP / Potash</td><td>₹1,710.54</td><td>Rabi 2025-26 avg</td></tr>
+<tr data-common-key="ssp"><td>SSP</td><td>₹505.84</td><td>2025-26 MRP</td></tr>
+<tr data-common-key="nanourea"><td>Nano Urea (500 ml)</td><td>₹240</td><td>IFFCO 500 ml</td></tr>
+<tr data-common-key="sulphururea"><td>Sulphur-coated Urea (Urea Gold, 40 kg bag)</td><td>₹254</td><td>w.e.f. 23 Jan 2026</td></tr>
+<tr data-common-key="gehubej-haryana"><td>Gehu Beej — Haryana (farmer)</td><td>₹2,700 / quintal</td><td>Rabi 2026-27 (full ₹4,395/q)</td></tr>
+    <tr data-common-key="gehubej-punjab"><td>Gehu Beej — Punjab (farmer)</td><td>₹2,250 / quintal</td><td>Rabi 2026-27 (full ₹4,250/q)</td></tr>
+<tr data-common-key="dhanbeej"><td>Dhan Beej (seasonal)</td><td>—</td><td>—</td></tr>
 </table>
+<p class="muted">Source: Urea — ₹266.50/45 kg MRP incl. GST (base MRP ₹242 + tax), Mar 2018 se unchanged; DAP ₹1,350 Rabi 2026 me bhi barkarar; NPK/MOP Rabi 2025-26 ke average retail rate hain (Rabi 2026-27 NBS 28 Oct 2026 tak notify nahi hua, early Nov 2026 me dobara check karna hai); Nano Urea ₹240 IFFCO 500 ml bottle; Sulphur-coated Urea (Urea Gold, 40 kg) ₹254, w.e.f. 23 Jan 2026; SSP ₹505.84 (2025-26 MRP, Rabi 2026-27 ka single MRP nahi hai). Gehu Beej ka koi national rate nahi hai — Haryana/Punjab ke farmer rate diye gaye hain. Dhan Beej ka verified rate nahi mila, isliye “—” hai.</p>
 </div>
 <div class="sec-panel" id="panel-bank">
 <h2 data-lang="panelBank">Bank aur Bachat Rate — Oct–Dec 2026 (quarterly)</h2>
@@ -485,22 +638,22 @@ body[data-sec="common"] #sectionLegend{display:flex}
 <p class="muted">Small savings ka rate har 3 mahine me sarkari notification se badalta hai, roz nahi.</p>
 <table class="rotable">
 <tr><th>Scheme</th><th>Rate</th></tr>
-<tr><td>PPF</td><td>7.10%</td></tr>
-<tr><td>Sukanya Samriddhi</td><td>8.20%</td></tr>
-<tr><td>NSC</td><td>7.70%</td></tr>
-<tr><td>Senior Citizens (SCSS)</td><td>8.20%</td></tr>
-<tr><td>Kisan Vikas Patra (KVP)</td><td>7.50% (115 mahine)</td></tr>
-<tr><td>Post Office Monthly Income</td><td>7.40%</td></tr>
-<tr><td>Post Office Time Deposit 1 / 2 / 3 / 5 saal</td><td>6.90% / 7.00% / 7.10% / 7.50%</td></tr>
-<tr><td>Post Office Recurring Deposit</td><td>6.70%</td></tr>
-<tr><td>Post Office Savings</td><td>4.00%</td></tr>
-<tr><td>Repo Rate (RBI)</td><td>5.50%</td></tr>
-<tr><td>EPF (FY26, saal me ek baar)</td><td>8.25%</td></tr>
+<tr data-common-key="ppf"><td>PPF</td><td>7.10%</td></tr>
+<tr data-common-key="sukanya"><td>Sukanya Samriddhi</td><td>8.20%</td></tr>
+<tr data-common-key="nsc"><td>NSC</td><td>7.70%</td></tr>
+<tr data-common-key="scss"><td>Senior Citizens (SCSS)</td><td>8.20%</td></tr>
+<tr data-common-key="kvp"><td>Kisan Vikas Patra (KVP)</td><td>7.50% (115 mahine)</td></tr>
+<tr data-common-key="pomis"><td>Post Office Monthly Income</td><td>7.40%</td></tr>
+<tr data-common-key="posttd"><td>Post Office Time Deposit 1 / 2 / 3 / 5 saal</td><td>6.90% / 7.00% / 7.10% / 7.50%</td></tr>
+<tr data-common-key="postrd"><td>Post Office Recurring Deposit</td><td>6.70%</td></tr>
+<tr data-common-key="postsav"><td>Post Office Savings</td><td>4.00%</td></tr>
+<tr data-common-key="repo"><td>Repo Rate (RBI)</td><td>5.50%</td></tr>
+<tr data-common-key="epf"><td>EPF (FY26, saal me ek baar)</td><td>8.25%</td></tr>
 </table>
 <p class="muted">Source: Finance Ministry / DEA quarterly notification Oct–Dec 2026, RBI, EPFO — research me mile hue rate, live karne se pehle dobara confirm kiye jayenge.</p>
 </div>
 <div class="priceSpace"></div>
-<div style="text-align:center;margin:0 0 12px"><button id="editCommonBtn" type="button">✏️ Edit Common Items</button><button id="resetCommonBtn" type="button">↺ Reset</button><div id="editHint">Edit mode ON hai — Common se hatane ke liye card ke upar <b>−</b> (halka laal) dabao. Doosre section me jaake kisi price ke upar <b>+</b> (halka hara) dabao to wo Common me aa jayega, aur ✓ tick dikhega. Band karne ke liye upar <b>✓ Done</b> dabao.</div></div>
+<div style="text-align:center;margin:0 0 12px"><button id="editBtn" type="button">✏️ Edit Common Items</button><button id="resetBtn" type="button">↺ Reset Common</button><div id="editHint">Edit mode ON hai — Common se hatane ke liye card ke upar <b>−</b> (halka laal) dabao. Doosre section me jaake kisi price ke upar <b>+</b> (halka hara) dabao to wo Common me aa jayega, aur ✓ tick dikhega. Band karne ke liye upar <b>✓ Done</b> dabao.</div></div>
 <div class="sharebox">
 <h3 data-lang="shareTitle">📤 Share karo</h3>
 <p style="margin:0 0 10px">Aaj ka rate apne doston aur family ko bhejo.</p>
@@ -511,7 +664,7 @@ body[data-sec="common"] #sectionLegend{display:flex}
 </div>
 <div class="note">
 <b>Note:</b> Ye rate 28 October 2026 subah check kiye gaye hain. Petrol/Diesel me aaj koi badlav nahi hai (Businessline, 28 Oct 2026: change ₹0.00); Sona aaj Groww wale rate par update kiya gaya hai; Chandi subah wala rate hi hai. Petrol/Diesel ka rate state-wise bhi badalta hai (state ka VAT alag hota hai) aur district-wise bhi badalta hai (depot se doori / freight ke hisab se), isliye yahan sheher-wise rate diya gaya hai — ek hi state ke do shehron ka rate bhi alag ho sakta hai. Sona-chandi ka rate source aur sheher par thoda alag ho sakta hai, aur making charges / GST alag se lagte hain. Kharidne se pehle apne sheher ke pump ya jeweller se rate confirm kar lein.<br><br>
-<b>Sources:</b> Petrol/Diesel — Businessline fuel-price pages, 28 Oct 2026 (Mumbai petrol ₹111.21, diesel ₹97.83, today = yesterday, change ₹0.00; Delhi petrol ₹102.12, diesel ₹95.20, sab listed states me change 0.00), aur KalingaTV / TechWordNews, 27 Oct 2026 tak verified unchanged, naye sheher (Ahmedabad, Jaipur, Lucknow, Bhopal, Patna, Chandigarh, Thiruvananthapuram) — TechWordNews / IndiRate, 27 Oct 2026, aur naye sheher (Gurgaon, Noida, Pune, Bhubaneswar) — TechWordNews / CarDekho, 27 Oct 2026, aur naye sheher (Agra, Ghaziabad) — Tezzbuzz, 27 Oct 2026, aur naye sheher (Surat, Vadodara, Rajkot) — Businessline / CarDekho / V3Cars, 27 Oct 2026, aur naya sheher (Hisar) — PriceKeeda / CarDekho / V3Cars, 27 Oct 2026, aur naye main sheher (Vijayawada, Itanagar, Guwahati, Raipur, Panaji, Shimla, Ranchi, Imphal, Shillong, Aizawl, Kohima, Amritsar, Gangtok, Agartala, Dehradun, Srinagar, Port Blair, Silvassa, Leh, Puducherry, Kavaratti) — petroldieselprice daily list, 27 Oct 2026 (kuch shehron me doosre source se chhota antar abhi bhi jaanch me hai, jaise Vijayawada, Itanagar, Shimla, Kohima — isliye wahi verified rate rakha gaya hai), LPG — petroldieselprice, Oct 2026, PNG — IGL official (2 Sep 2026 se), CNG sheher-wise — Asianet Newsable, 26 Oct 2026, aur naye shehron ka CNG — CarDekho, 27 Oct 2026, Sona — Groww, 28 Oct 2026; Chandi — All India Bullion Delhi reference, 28 Oct 2026 (subah 05:25 IST). Sabse Sasta / Sabse Mehnga box listed shehron ke hisab se hai. Naye sheher (Gandhinagar, Jammu, Indore, Nagpur, Nashik, Aurangabad, Thane, Kolhapur, Cuttack, Varanasi, Meerut, Gorakhpur, Coimbatore, Madurai) — BusinessToday / GoodReturns, 27 Oct 2026; Jammu diesel ka doosra source nahi mila isliye wahan “—” hai, Indore CNG par ek source ₹95.76 deta hai jabki do source ₹97.76 dete hain. Naye main-district sheher (Ambala, Karnal, Faridabad, Jalandhar, Jalgaon, Bhavnagar, Jamnagar, Jabalpur, Durg, Kota, Jodhpur, Udaipur, Diu, Mysuru, Hubballi, Kochi, Kozhikode, Salem, Tiruchirappalli, Warangal, Visakhapatnam, Karaikal, Howrah, Sambalpur, Muzaffarpur, Jamshedpur, Namchi, Jorhat, Pasighat, Tawang, Churachandpur, Thoubal, Tura, Lunglei, Champhai, Dimapur, Mokokchung, Dharmanagar) — GoodReturns / BusinessToday / Businessline / CarDekho / PriceKeeda, 27 Oct 2026; Howrah CNG ek source se alag hone par “—” rakha hai.
+<b>Sources:</b> Petrol/Diesel — Businessline fuel-price pages, 28 Oct 2026 (Mumbai petrol ₹111.21, diesel ₹97.83, today = yesterday, change ₹0.00; Delhi petrol ₹102.12, diesel ₹95.20, sab listed states me change 0.00), aur KalingaTV / TechWordNews, 27 Oct 2026 tak verified unchanged, naye sheher (Ahmedabad, Jaipur, Lucknow, Bhopal, Patna, Chandigarh, Thiruvananthapuram) — TechWordNews / IndiRate, 27 Oct 2026, aur naye sheher (Gurgaon, Noida, Pune, Bhubaneswar) — TechWordNews / CarDekho, 27 Oct 2026, aur naye sheher (Agra, Ghaziabad) — Tezzbuzz, 27 Oct 2026, aur naye sheher (Surat, Vadodara, Rajkot) — Businessline / CarDekho / V3Cars, 27 Oct 2026, aur naya sheher (Hisar) — PriceKeeda / CarDekho / V3Cars, 27 Oct 2026, aur naye main sheher (Vijayawada, Itanagar, Guwahati, Raipur, Panaji, Shimla, Ranchi, Imphal, Shillong, Aizawl, Kohima, Amritsar, Gangtok, Agartala, Dehradun, Port Blair, Silvassa, Leh, Puducherry, Kavaratti) — petroldieselprice daily list, 27 Oct 2026; Srinagar petrol ₹108.41 / diesel ₹96.42 — Goodreturns / PriceKeeda, 28 Oct 2026 (kuch shehron me doosre source se chhota antar abhi bhi jaanch me hai, jaise Vijayawada, Itanagar, Shimla, Kohima — isliye wahi verified rate rakha gaya hai), LPG — petroldieselprice, Oct 2026, PNG — IGL official (2 Sep 2026 se), CNG sheher-wise — Asianet Newsable, 26 Oct 2026, aur naye shehron ka CNG — CarDekho, 27 Oct 2026, Sona — Groww, 28 Oct 2026; Chandi — All India Bullion Delhi reference, 28 Oct 2026 (subah 07:38 IST). Sabse Sasta / Sabse Mehnga box listed shehron ke hisab se hai. Naye sheher (Gandhinagar, Jammu, Indore, Nagpur, Nashik, Aurangabad, Thane, Kolhapur, Cuttack, Varanasi, Meerut, Gorakhpur, Coimbatore, Madurai) — BusinessToday / GoodReturns, 27 Oct 2026; Jammu diesel ₹92.81 (Businessline / Goodreturns / BusinessToday / Upstox, 28 Oct 2026), Indore CNG par ek source ₹95.76 deta hai jabki do source ₹97.76 dete hain. Naye main-district sheher (Ambala, Karnal, Faridabad, Jalandhar, Jalgaon, Bhavnagar, Jamnagar, Jabalpur, Durg, Kota, Jodhpur, Udaipur, Diu, Mysuru, Hubballi, Kochi, Kozhikode, Salem, Tiruchirappalli, Warangal, Visakhapatnam, Karaikal, Howrah, Sambalpur, Muzaffarpur, Jamshedpur, Namchi, Jorhat, Pasighat, Tawang, Churachandpur, Thoubal, Tura, Lunglei, Champhai, Dimapur, Mokokchung, Dharmanagar) — GoodReturns / BusinessToday / Businessline / CarDekho / PriceKeeda, 27 Oct 2026; Howrah CNG ek source se alag hone par “—” rakha hai.
 </div>
 </main></div>
 <div class="toast" id="toast">✅ Copied!</div>
@@ -520,12 +673,12 @@ body[data-sec="common"] #sectionLegend{display:flex}
 var data={
 Delhi:{petrol:"₹102.12",diesel:"₹95.20",cng:"₹86.98"},
 Mumbai:{petrol:"₹111.21",diesel:"₹97.83",cng:"₹89.00"},
-Kolkata:{petrol:"₹113.51",diesel:"₹99.82",cng:"—"},
+Kolkata:{petrol:"₹113.51",diesel:"₹99.82",cng:"₹103.00"},
 Chennai:{petrol:"₹107.76",diesel:"₹99.55",cng:"₹99.50"},
 Bengaluru:{petrol:"₹111.68",diesel:"₹99.56",cng:"₹98.00"},
 Hyderabad:{petrol:"₹116.15",diesel:"₹104.23",cng:"₹112.00"},
 Ahmedabad:{petrol:"₹102.15",diesel:"₹98.27",cng:"₹94.02"},
-Jaipur:{petrol:"₹113.19",diesel:"₹98.25",cng:"—"},
+Jaipur:{petrol:"₹113.19",diesel:"₹98.25",cng:"₹99.50"},
 Lucknow:{petrol:"₹101.86",diesel:"₹95.36",cng:"₹107.00"},
 Bhopal:{petrol:"₹114.54",diesel:"₹99.64",cng:"—"},
 Patna:{petrol:"₹113.37",diesel:"₹99.36",cng:"—"},
@@ -536,7 +689,7 @@ Noida:{petrol:"₹101.96",diesel:"₹95.44",cng:"₹95.59"},
 Pune:{petrol:"₹111.90",diesel:"₹98.55",cng:"₹100.50"},
 Bhubaneswar:{petrol:"₹108.97",diesel:"₹100.68",cng:"—"},
 Agra:{petrol:"₹101.66",diesel:"₹95.14",cng:"—"},
-Ghaziabad:{petrol:"₹101.88",diesel:"₹95.36",cng:"—"},
+Ghaziabad:{petrol:"₹101.88",diesel:"₹95.36",cng:"₹95.59"},
 Surat:{petrol:"₹101.82",diesel:"₹97.95",cng:"—"},
 Vadodara:{petrol:"₹101.46",diesel:"₹97.57",cng:"—"},
 Rajkot:{petrol:"₹101.85",diesel:"₹97.99",cng:"—"},
@@ -556,14 +709,14 @@ Amritsar:{petrol:"₹106.36",diesel:"₹96.22",cng:"—"},
 Gangtok:{petrol:"₹110.95",diesel:"₹97.75",cng:"—"},
 Agartala:{petrol:"₹105.17",diesel:"₹94.05",cng:"—"},
 Dehradun:{petrol:"₹100.54",diesel:"₹96.00",cng:"—"},
-Srinagar:{petrol:"₹104.33",diesel:"₹93.02",cng:"—"},
+Srinagar:{petrol:"₹108.41",diesel:"₹96.42",cng:"—"},
 "Port Blair":{petrol:"₹88.66",diesel:"₹84.56",cng:"—"},
 Silvassa:{petrol:"₹99.50",diesel:"₹95.40",cng:"—"},
 Leh:{petrol:"₹109.81",diesel:"₹97.92",cng:"—"},
 Puducherry:{petrol:"₹103.58",diesel:"₹93.79",cng:"—"},
 Kavaratti:{petrol:"₹107.50",diesel:"₹102.80",cng:"—"},
 Gandhinagar:{petrol:"₹102.04",diesel:"₹98.15",cng:"—"},
-Jammu:{petrol:"₹104.13",diesel:"—",cng:"—"},
+Jammu:{petrol:"₹104.13",diesel:"₹92.81",cng:"—"},
 Indore:{petrol:"₹114.58",diesel:"₹99.70",cng:"₹97.76"},
 Nagpur:{petrol:"₹111.72",diesel:"₹98.38",cng:"₹88.90"},
 Nashik:{petrol:"₹112.44",diesel:"₹99.05",cng:"₹98.50"},
@@ -674,6 +827,12 @@ document.querySelectorAll(".secbtn").forEach(function(b){b.classList.remove("on"
 btn.classList.add("on");
 document.body.setAttribute("data-sec",btn.getAttribute("data-sec"));
 window.scrollTo({top:0,behavior:"smooth"});
+if(typeof secEdit!=="undefined" && secEdit){secEdit=null;}
+if(typeof updateEditButtons==="function"){updateEditButtons();}
+if(typeof applyCommon==="function"){applyCommon();}
+if(typeof applyFuel==="function"){applyFuel();}
+if(typeof applyPanelHidden==="function"){applyPanelHidden();}
+if(typeof applyVisibility==="function"){applyVisibility();}
 if(typeof refreshEditButtons==="function"){refreshEditButtons();}if(typeof updateCommonEmptyNote==="function"){updateCommonEmptyNote();}
 });
 });
@@ -682,9 +841,9 @@ window.addEventListener("load",hideLoader);
 setTimeout(hideLoader,1500);
 
 var LANG={
-hinglish:{tagline:"Aaj Ka Rate, ek nazar me",loader:"Aaj Ka Rate load ho raha hai…",sectionTitle:"Section chuno",secCommon:"🏠 Common Items",secCommonSub:"Petrol, Diesel, CNG, LPG, Sona, Chandi, Dollar",secFuel:"⛽ Fuel aur Gas",secFuelSub:"Petrol, Diesel, CNG, LPG, PNG",secMetal:"🪙 Sona-Chandi aur Metal",secMetalSub:"Gold, Silver, Copper, Aluminium",secCurrency:"💱 Currency",secCurrencySub:"Dollar, Euro, Riyal, Dinar",secMandi:"🌾 Kisan Mandi",secMandiSub:"Fasal ka wholesale bhav",secKhad:"🌱 Khad aur Beej",secKhadSub:"Urea, DAP, NPK, Beej",secBank:"🏦 Bank aur Bachat",secBankSub:"FD, PPF, Sukanya, NSC",note7:"🕖 <b>Roz subah 7 baje</b> — Petrol aur Diesel ka rate official company ke rate se verify karke BhavSathi par update hota hai.",selCity:"Chuna hua sheher:",sastaTitle:"Sabse Sasta — Sabse Mehnga (listed shehron me)",petrolWord:"Petrol:",dieselWord:"Diesel:",sastaBox:"Sabse Sasta",mehngaBox:"Sabse Mehnga",chooserCity:"Sheher chuno (96 sheher):",chooserState:"State chuno (36 state):",chooserStateCities:"{s} ke sheher ({n} sheher):",stateNoteGeneral:"State ka koi ek rate nahi hota, har sheher ka rate alag hai.",stateNoteCities:"{s} ke sheher:",modeCity:"Main city wise",modeState:"State wise",legendPetrol:"Petrol",legendDiesel:"Diesel",legendSona:"Sona",legendChandi:"Chandi",cardPetrol:"Petrol / litre",cardDiesel:"Diesel / litre",cardCng:"CNG / kg (Delhi)",cardPng:"PNG Domestic / SCM (Delhi)",cardLpg:"LPG Domestic 14.2 kg (Delhi, Oct 2026)",cardGold:"Sona 24K / 10 gram",cardSilver:"Chandi / kg",cardDollar:"Dollar (USD) / ₹",noChange:"Kal se koi badlav nahi",cngNote:"Sheher ke hisab se alag ho sakta hai",silverNote:"Source aur sheher par rate thoda alag ho sakta hai",panelMetal:"Sona-Chandi aur Metal — 28 October 2026",panelCurrency:"Currency — 1 unit = ₹ me (FBIL reference, weekdays)",panelMandi:"Kisan Mandi — Wholesale bhav / quintal (mandi-wise)",panelKhad:"Khad aur Beej — Seasonal rate (roz ka rate nahi)",panelBank:"Bank aur Bachat Rate — Oct–Dec 2026 (quarterly)",itemCol:"Item",rateCol:"Rate",shareTitle:"📤 Share karo",compareTitle:"⛽ Petrol / Diesel Compare karo",compareShort:"2 sheher chuno, gap dekho.",sheher1:"Sheher 1",sheher2:"Sheher 2",compareBtn:"Compare karo",compareNote:"Rate: 28 Oct 2026, listed 96 sheher.",petrolLabel:"Petrol",dieselLabel:"Diesel",gapWord:"Gap:",sastaWord:"sasta",equalWord:"dono barabar",searchPh:"Sheher search karo…"},
-english:{tagline:"Today's rates, at a glance",loader:"Loading today's rates…",sectionTitle:"Choose section",secCommon:"🏠 Common Items",secCommonSub:"Petrol, Diesel, CNG, LPG, Gold, Silver, Dollar",secFuel:"⛽ Fuel and Gas",secFuelSub:"Petrol, Diesel, CNG, LPG, PNG",secMetal:"🪙 Gold-Silver and Metal",secMetalSub:"Gold, Silver, Copper, Aluminium",secCurrency:"💱 Currency",secCurrencySub:"Dollar, Euro, Riyal, Dinar",secMandi:"🌾 Farm Market",secMandiSub:"Wholesale crop rates",secKhad:"🌱 Fertiliser and Seed",secKhadSub:"Urea, DAP, NPK, Seed",secBank:"🏦 Bank and Savings",secBankSub:"FD, PPF, Sukanya, NSC",note7:"🕖 <b>Every morning at 7 am</b> — Petrol and Diesel rates are verified from official company rates and updated on BhavSathi.",selCity:"Selected city:",sastaTitle:"Cheapest — Costliest (in listed cities)",petrolWord:"Petrol:",dieselWord:"Diesel:",sastaBox:"Cheapest",mehngaBox:"Costliest",chooserCity:"Choose city (96 cities):",chooserState:"Choose state (36 states):",chooserStateCities:"Cities in {s} ({n} cities):",stateNoteGeneral:"A state has no single rate, every city has a different rate.",stateNoteCities:"Cities in {s}:",modeCity:"Main city wise",modeState:"State wise",legendPetrol:"Petrol",legendDiesel:"Diesel",legendSona:"Gold",legendChandi:"Silver",cardPetrol:"Petrol / litre",cardDiesel:"Diesel / litre",cardCng:"CNG / kg (Delhi)",cardPng:"PNG Domestic / SCM (Delhi)",cardLpg:"LPG Domestic 14.2 kg (Delhi, Oct 2026)",cardGold:"Gold 24K / 10 gram",cardSilver:"Silver / kg",cardDollar:"Dollar (USD) / ₹",noChange:"No change since yesterday",cngNote:"May differ by city",silverNote:"May differ slightly by source and city",panelMetal:"Gold-Silver and Metal — 28 October 2026",panelCurrency:"Currency — 1 unit in ₹ (FBIL reference, weekdays)",panelMandi:"Farm Market — Wholesale rate / quintal (market-wise)",panelKhad:"Fertiliser and Seed — Seasonal rate (not a daily rate)",panelBank:"Bank and Savings Rates — Oct–Dec 2026 (quarterly)",itemCol:"Item",rateCol:"Rate",shareTitle:"📤 Share",compareTitle:"⛽ Compare Petrol / Diesel",compareShort:"Choose 2 cities, see the gap.",sheher1:"City 1",sheher2:"City 2",compareBtn:"Compare",compareNote:"Rates: 28 Oct 2026, listed 96 cities.",petrolLabel:"Petrol",dieselLabel:"Diesel",gapWord:"Gap:",sastaWord:"cheaper",equalWord:"both equal",searchPh:"Search city…"},
-hindi:{tagline:"आज का रेट, एक नज़र में",loader:"आज का रेट लोड हो रहा है…",sectionTitle:"सेक्शन चुनें",secCommon:"🏠 कॉमन आइटम",secCommonSub:"पेट्रोल, डीज़ल, सीएनजी, एलपीजी, सोना, चाँदी, डॉलर",secFuel:"⛽ ईंधन और गैस",secFuelSub:"पेट्रोल, डीज़ल, सीएनजी, एलपीजी, पीएनजी",secMetal:"🪙 सोना-चाँदी और मेटल",secMetalSub:"सोना, चाँदी, ताँबा, एल्युमिनियम",secCurrency:"💱 मुद्रा",secCurrencySub:"डॉलर, यूरो, रियाल, दीनार",secMandi:"🌾 किसान मंडी",secMandiSub:"फसल का थोक भाव",secKhad:"🌱 खाद और बीज",secKhadSub:"यूरिया, डीएपी, एनपीके, बीज",secBank:"🏦 बैंक और बचत",secBankSub:"एफडी, पीपीएफ, सुकन्या, एनएससी",note7:"🕖 <b>रोज़ सुबह 7 बजे</b> — पेट्रोल और डीज़ल का रेट आधिकारिक कंपनी के रेट से वेरिफ़ाई करके BhavSathi पर अपडेट होता है।",selCity:"चुना हुआ शहर:",sastaTitle:"सबसे सस्ता — सबसे महँगा (सूचीबद्ध शहरों में)",petrolWord:"पेट्रोल:",dieselWord:"डीज़ल:",sastaBox:"सबसे सस्ता",mehngaBox:"सबसे महँगा",chooserCity:"शहर चुनें (96 शहर):",chooserState:"राज्य चुनें (36 राज्य):",chooserStateCities:"{s} के शहर ({n} शहर):",stateNoteGeneral:"किसी राज्य का कोई एक रेट नहीं होता, हर शहर का रेट अलग है।",stateNoteCities:"{s} के शहर:",modeCity:"मुख्य शहर अनुसार",modeState:"राज्य अनुसार",legendPetrol:"पेट्रोल",legendDiesel:"डीज़ल",legendSona:"सोना",legendChandi:"चाँदी",cardPetrol:"पेट्रोल / लीटर",cardDiesel:"डीज़ल / लीटर",cardCng:"सीएनजी / किलोग्राम (दिल्ली)",cardPng:"पीएनजी घरेलू / एससीएम (दिल्ली)",cardLpg:"एलपीजी घरेलू 14.2 किलोग्राम (दिल्ली, अक्टूबर 2026)",cardGold:"सोना 24K / 10 ग्राम",cardSilver:"चाँदी / किलोग्राम",cardDollar:"डॉलर (USD) / ₹",noChange:"कल से कोई बदलाव नहीं",cngNote:"शहर के हिसाब से अलग हो सकता है",silverNote:"स्रोत और शहर के अनुसार रेट थोड़ा अलग हो सकता है",panelMetal:"सोना-चाँदी और मेटल — 27 अक्टूबर 2026",panelCurrency:"मुद्रा — 1 यूनिट = ₹ में (FBIL रेफरेंस, कार्यदिवस)",panelMandi:"किसान मंडी — थोक भाव / क्विंटल (मंडी अनुसार)",panelKhad:"खाद और बीज — मौसमी रेट (रोज़ का रेट नहीं)",panelBank:"बैंक और बचत रेट — अक्टूबर–दिसंबर 2026 (त्रैमासिक)",itemCol:"आइटम",rateCol:"रेट",shareTitle:"📤 शेयर करें",compareTitle:"⛽ पेट्रोल / डीज़ल तुलना करें",compareShort:"2 शहर चुनें, अंतर देखें।",sheher1:"शहर 1",sheher2:"शहर 2",compareBtn:"तुलना करें",compareNote:"रेट: 27 अक्टूबर 2026, सूचीबद्ध 96 शहर।",petrolLabel:"पेट्रोल",dieselLabel:"डीज़ल",gapWord:"अंतर:",sastaWord:"सस्ता",equalWord:"दोनों बराबर",searchPh:"शहर खोजें…"}
+hinglish:{tagline:"Aaj Ka Rate, ek nazar me",loader:"Aaj Ka Rate load ho raha hai…",sectionTitle:"Section chuno",secCommon:"🏠 Common Items",secCommonSub:"Petrol, Diesel, CNG, LPG, Sona, Chandi, Dollar",secFuel:"⛽ Fuel aur Gas",secFuelSub:"Petrol, Power Petrol, Diesel, CNG, LPG, PNG, Auto LPG, Kerosene",secMetal:"🪙 Sona-Chandi aur Metal",secMetalSub:"Gold, Silver, Copper, Aluminium",secCurrency:"💱 Currency",secCurrencySub:"Dollar, Euro, Riyal, Dinar",secMandi:"🌾 Kisan Mandi",secMandiSub:"Fasal ka wholesale bhav",secKhad:"🌱 Khad aur Beej",secKhadSub:"Urea, DAP, NPK, Beej",secBank:"🏦 Bank aur Bachat",secBankSub:"FD, PPF, Sukanya, NSC",note7:"🕖 <b>Roz subah 7 baje</b> — Petrol aur Diesel ka rate official company ke rate se verify karke BhavSathi par update hota hai.",selCity:"Chuna hua sheher:",sastaTitle:"Sabse Sasta — Sabse Mehnga (listed shehron me)",petrolWord:"Petrol:",dieselWord:"Diesel:",sastaBox:"Sabse Sasta",mehngaBox:"Sabse Mehnga",chooserCity:"Sheher chuno (96 sheher):",chooserState:"State chuno (36 state):",chooserStateCities:"{s} ke sheher ({n} sheher):",stateNoteGeneral:"State ka koi ek rate nahi hota, har sheher ka rate alag hai.",stateNoteCities:"{s} ke sheher:",modeCity:"Main city wise",modeState:"State wise",legendPetrol:"Petrol",legendDiesel:"Diesel",legendSona:"Sona",legendChandi:"Chandi",cardPetrol:"Petrol / litre",cardDiesel:"Diesel / litre",cardCng:"CNG / kg (Delhi)",cardPng:"PNG Domestic / SCM (Delhi)",cardLpg:"LPG Domestic 14.2 kg (Delhi, Oct 2026)",cardGold:"Sona 24K / 10 gram",cardSilver:"Chandi / kg",cardDollar:"Dollar (USD) / ₹",noChange:"Kal se koi badlav nahi",cngNote:"Sheher ke hisab se alag ho sakta hai",silverNote:"Source aur sheher par rate thoda alag ho sakta hai",panelMetal:"Sona-Chandi aur Metal — 28 October 2026",panelCurrency:"Currency — 1 unit = ₹ me (28 Oct 2026, mid-market)",panelMandi:"Kisan Mandi — Wholesale bhav / quintal (mandi-wise)",panelKhad:"Khad aur Beej — Seasonal rate (roz ka rate nahi)",panelBank:"Bank aur Bachat Rate — Oct–Dec 2026 (quarterly)",itemCol:"Item",rateCol:"Rate",shareTitle:"📤 Share karo",compareTitle:"⛽ Petrol / Diesel Compare karo",compareShort:"2 sheher chuno, gap dekho.",sheher1:"Sheher 1",sheher2:"Sheher 2",compareBtn:"Compare karo",compareNote:"Rate: 28 Oct 2026, listed 96 sheher.",petrolLabel:"Petrol",dieselLabel:"Diesel",gapWord:"Gap:",sastaWord:"sasta",equalWord:"dono barabar",searchPh:"Sheher search karo…"},
+english:{tagline:"Today's rates, at a glance",loader:"Loading today's rates…",sectionTitle:"Choose section",secCommon:"🏠 Common Items",secCommonSub:"Petrol, Diesel, CNG, LPG, Gold, Silver, Dollar",secFuel:"⛽ Fuel and Gas",secFuelSub:"Petrol, Power Petrol, Diesel, CNG, LPG, PNG, Auto LPG, Kerosene",secMetal:"🪙 Gold-Silver and Metal",secMetalSub:"Gold, Silver, Copper, Aluminium",secCurrency:"💱 Currency",secCurrencySub:"Dollar, Euro, Riyal, Dinar",secMandi:"🌾 Farm Market",secMandiSub:"Wholesale crop rates",secKhad:"🌱 Fertiliser and Seed",secKhadSub:"Urea, DAP, NPK, Seed",secBank:"🏦 Bank and Savings",secBankSub:"FD, PPF, Sukanya, NSC",note7:"🕖 <b>Every morning at 7 am</b> — Petrol and Diesel rates are verified from official company rates and updated on BhavSathi.",selCity:"Selected city:",sastaTitle:"Cheapest — Costliest (in listed cities)",petrolWord:"Petrol:",dieselWord:"Diesel:",sastaBox:"Cheapest",mehngaBox:"Costliest",chooserCity:"Choose city (96 cities):",chooserState:"Choose state (36 states):",chooserStateCities:"Cities in {s} ({n} cities):",stateNoteGeneral:"A state has no single rate, every city has a different rate.",stateNoteCities:"Cities in {s}:",modeCity:"Main city wise",modeState:"State wise",legendPetrol:"Petrol",legendDiesel:"Diesel",legendSona:"Gold",legendChandi:"Silver",cardPetrol:"Petrol / litre",cardDiesel:"Diesel / litre",cardCng:"CNG / kg (Delhi)",cardPng:"PNG Domestic / SCM (Delhi)",cardLpg:"LPG Domestic 14.2 kg (Delhi, Oct 2026)",cardGold:"Gold 24K / 10 gram",cardSilver:"Silver / kg",cardDollar:"Dollar (USD) / ₹",noChange:"No change since yesterday",cngNote:"May differ by city",silverNote:"May differ slightly by source and city",panelMetal:"Gold-Silver and Metal — 28 October 2026",panelCurrency:"Currency — 1 unit in ₹ (28 Oct 2026, mid-market)",panelMandi:"Farm Market — Wholesale rate / quintal (market-wise)",panelKhad:"Fertiliser and Seed — Seasonal rate (not a daily rate)",panelBank:"Bank and Savings Rates — Oct–Dec 2026 (quarterly)",itemCol:"Item",rateCol:"Rate",shareTitle:"📤 Share",compareTitle:"⛽ Compare Petrol / Diesel",compareShort:"Choose 2 cities, see the gap.",sheher1:"City 1",sheher2:"City 2",compareBtn:"Compare",compareNote:"Rates: 28 Oct 2026, listed 96 cities.",petrolLabel:"Petrol",dieselLabel:"Diesel",gapWord:"Gap:",sastaWord:"cheaper",equalWord:"both equal",searchPh:"Search city…"},
+hindi:{tagline:"आज का रेट, एक नज़र में",loader:"आज का रेट लोड हो रहा है…",sectionTitle:"सेक्शन चुनें",secCommon:"🏠 कॉमन आइटम",secCommonSub:"पेट्रोल, डीज़ल, सीएनजी, एलपीजी, सोना, चाँदी, डॉलर",secFuel:"⛽ ईंधन और गैस",secFuelSub:"पेट्रोल, पावर पेट्रोल, डीज़ल, सीएनजी, एलपीजी, पीएनजी, ऑटो एलपीजी, केरोसीन",secMetal:"🪙 सोना-चाँदी और मेटल",secMetalSub:"सोना, चाँदी, ताँबा, एल्युमिनियम",secCurrency:"💱 मुद्रा",secCurrencySub:"डॉलर, यूरो, रियाल, दीनार",secMandi:"🌾 किसान मंडी",secMandiSub:"फसल का थोक भाव",secKhad:"🌱 खाद और बीज",secKhadSub:"यूरिया, डीएपी, एनपीके, बीज",secBank:"🏦 बैंक और बचत",secBankSub:"एफडी, पीपीएफ, सुकन्या, एनएससी",note7:"🕖 <b>रोज़ सुबह 7 बजे</b> — पेट्रोल और डीज़ल का रेट आधिकारिक कंपनी के रेट से वेरिफ़ाई करके BhavSathi पर अपडेट होता है।",selCity:"चुना हुआ शहर:",sastaTitle:"सबसे सस्ता — सबसे महँगा (सूचीबद्ध शहरों में)",petrolWord:"पेट्रोल:",dieselWord:"डीज़ल:",sastaBox:"सबसे सस्ता",mehngaBox:"सबसे महँगा",chooserCity:"शहर चुनें (96 शहर):",chooserState:"राज्य चुनें (36 राज्य):",chooserStateCities:"{s} के शहर ({n} शहर):",stateNoteGeneral:"किसी राज्य का कोई एक रेट नहीं होता, हर शहर का रेट अलग है।",stateNoteCities:"{s} के शहर:",modeCity:"मुख्य शहर अनुसार",modeState:"राज्य अनुसार",legendPetrol:"पेट्रोल",legendDiesel:"डीज़ल",legendSona:"सोना",legendChandi:"चाँदी",cardPetrol:"पेट्रोल / लीटर",cardDiesel:"डीज़ल / लीटर",cardCng:"सीएनजी / किलोग्राम (दिल्ली)",cardPng:"पीएनजी घरेलू / एससीएम (दिल्ली)",cardLpg:"एलपीजी घरेलू 14.2 किलोग्राम (दिल्ली, अक्टूबर 2026)",cardGold:"सोना 24K / 10 ग्राम",cardSilver:"चाँदी / किलोग्राम",cardDollar:"डॉलर (USD) / ₹",noChange:"कल से कोई बदलाव नहीं",cngNote:"शहर के हिसाब से अलग हो सकता है",silverNote:"स्रोत और शहर के अनुसार रेट थोड़ा अलग हो सकता है",panelMetal:"सोना-चाँदी और मेटल — 27 अक्टूबर 2026",panelCurrency:"मुद्रा — 1 यूनिट = ₹ में (28 अक्टूबर 2026, मिड-मार्केट)",panelMandi:"किसान मंडी — थोक भाव / क्विंटल (मंडी अनुसार)",panelKhad:"खाद और बीज — मौसमी रेट (रोज़ का रेट नहीं)",panelBank:"बैंक और बचत रेट — अक्टूबर–दिसंबर 2026 (त्रैमासिक)",itemCol:"आइटम",rateCol:"रेट",shareTitle:"📤 शेयर करें",compareTitle:"⛽ पेट्रोल / डीज़ल तुलना करें",compareShort:"2 शहर चुनें, अंतर देखें।",sheher1:"शहर 1",sheher2:"शहर 2",compareBtn:"तुलना करें",compareNote:"रेट: 27 अक्टूबर 2026, सूचीबद्ध 96 शहर।",petrolLabel:"पेट्रोल",dieselLabel:"डीज़ल",gapWord:"अंतर:",sastaWord:"सस्ता",equalWord:"दोनों बराबर",searchPh:"शहर खोजें…"}
 };
 var currentLang="hinglish";
 try{var _saved=localStorage.getItem("bhavsathi-lang");if(_saved&&LANG[_saved]){currentLang=_saved;}}catch(e){}
@@ -711,55 +870,87 @@ document.querySelectorAll("[data-langbtn]").forEach(function(b){b.addEventListen
 if(typeof applyCitiesCollapse==="function"){applyCitiesCollapse();}
 
 var DEFAULT_COMMON=["petrol","diesel","cng","lpg","gold","silver","dollar"];
-var editMode=false, justAddedKey="", justAddedCustom="";
-function getCommon(){try{var s=localStorage.getItem("bhavsathi-common");if(s){var o=JSON.parse(s);if(o&&Array.isArray(o.cards)&&Array.isArray(o.customs)){return o;}}}catch(e){}return {cards:DEFAULT_COMMON.slice(),customs:[]};}
+var DEFAULT_FUEL=["petrol","powerpetrol","diesel","cng","lpg","lpgcomm","lpg5kg","png","pngcomm","autolpg","kerosene"];
+var EDIT_SEC_LABELS={"fuel":"⛽ Edit Fuel Items","metal":"🪙 Edit Metal Items","currency":"💱 Edit Currency Items","mandi":"🌾 Edit Mandi Items","khad":"🌱 Edit Khad Items","bank":"🏦 Edit Bank Items"};
+var RESET_SEC_NAMES={"fuel":"Fuel","metal":"Metal","currency":"Currency","mandi":"Mandi","khad":"Khad","bank":"Bank"};
+var secEdit=null, commonEdit=false, justAddedKey="", justAddedCustom="";var ROW_COMMON_MAP={};
+function getCommon(){try{var s=localStorage.getItem("bhavsathi-common");if(s){var o=JSON.parse(s);if(o&&Array.isArray(o.cards)&&Array.isArray(o.customs)){return o;}}}catch(e){}return {cards:DEFAULT_COMMON.slice(),customs:[]};} 
 function saveCommon(o){try{localStorage.setItem("bhavsathi-common",JSON.stringify(o));}catch(e){}}
 function hasCustomSaved(){try{return !!localStorage.getItem("bhavsathi-common");}catch(e){return false;}}
 function currentSec(){return document.body.getAttribute("data-sec")||"common";}
+function getFuel(){try{var s=localStorage.getItem("bhavsathi-fuel");if(s){var o=JSON.parse(s);if(o&&Array.isArray(o.cards)){return o;}}}catch(e){}return {cards:DEFAULT_FUEL.slice()};}
+function saveFuel(o){try{localStorage.setItem("bhavsathi-fuel",JSON.stringify(o));}catch(e){}}
+function getSecHidden(sec){try{var s=localStorage.getItem("bhavsathi-sec-"+sec);if(s){var o=JSON.parse(s);if(o&&Array.isArray(o.hidden)){return o.hidden;}}}catch(e){}return [];}
+function saveSecHidden(sec,list){try{localStorage.setItem("bhavsathi-sec-"+sec,JSON.stringify({hidden:list}));}catch(e){}}
+function updateEditButtons(){var sec=currentSec();var eb=document.getElementById("editBtn");var rb=document.getElementById("resetBtn");var hint=document.getElementById("editHint");document.body.classList.toggle("edit-on",!!(secEdit||commonEdit));if(eb){if(secEdit===sec){eb.textContent="✓ Done — Edit band karo";}else if(commonEdit){eb.textContent="✓ Done — Common Edit band karo";}else{eb.textContent=(sec==="common")?"✏️ Edit Common Items":(EDIT_SEC_LABELS[sec]||"✏️ Edit Items");}eb.classList.toggle("on",!!(secEdit===sec||commonEdit));}if(rb){rb.textContent=(sec==="common")?"↺ Reset Common":"↺ Reset "+(RESET_SEC_NAMES[sec]||"");}if(hint){if(secEdit===sec){hint.style.display="";hint.textContent=(sec==="fuel")?"Fuel Edit ON hai — upar ke box ya neeche ki list se − dabao to box hat jayega, + dabao to wapas aa jayega. Band karne ke liye Done dabao.":"Edit ON hai — neeche ki list ki row par − dabao to wo is section se chhup jayegi, ↩ dabao to wapas aa jayegi. Band karne ke liye Done dabao.";}else if(commonEdit){hint.style.display="";hint.textContent="Common Edit ON hai — kisi bhi section me box ya list ki row par + dabao to wo Common me aa jayega, − dabao to Common se hat jayega. Section badalne par bhi ye ON rahega. Band karne ke liye upar Done dabao.";}else{hint.style.display="none";}}}
 function updateCommonEmptyNote(){var n=document.getElementById("commonEmptyNote");if(!n){return;}var o=getCommon();n.style.display=(currentSec()==="common"&&o.cards.length===0&&o.customs.length===0)?"":"none";}
-function renderCustomCards(){document.querySelectorAll(".custom-card,.empty-slot").forEach(function(el){el.remove();});var cardsBox=document.querySelector(".cards");if(!cardsBox){return;}var o=getCommon();o.customs.forEach(function(c){var d=document.createElement("div");d.className="card custom-card sec-"+(c.section||"other");d.setAttribute("data-custom-label",c.label);var parts=(c.rate||"").split(" ");var pricePart=parts[0]||c.rate;var notePart=parts.slice(1).join(" ");d.innerHTML="<small>"+c.label+"</small><div class=\"price\" title=\""+c.rate+"\">"+pricePart+"</div><small>"+notePart+"</small>";cardsBox.appendChild(d);});var total=o.cards.length+o.customs.length;var ph=Math.max(0,8-total);for(var i=0;i<ph;i++){var e=document.createElement("div");e.className="card empty-slot";cardsBox.appendChild(e);}var note=document.getElementById("commonEmptyNote");if(!note){note=document.createElement("div");note.id="commonEmptyNote";note.style.display="none";note.style.margin="8px 0";note.style.fontSize="15px";note.textContent="Common khali hai. Fuel ya Metal section me jaake kisi price ke upar + dabao, ya Edit band karo.";cardsBox.parentNode.insertBefore(note,cardsBox.nextSibling);}}
+function renderCustomCards(){document.querySelectorAll(".custom-card,.empty-slot").forEach(function(el){el.remove();});var cardsBox=document.querySelector(".cards");if(!cardsBox){return;}var o=getCommon();o.customs.forEach(function(c){var d=document.createElement("div");d.className="card custom-card sec-"+(c.section||"other");d.setAttribute("data-custom-label",c.label);var parts=(c.rate||"").split(" ");var pricePart=parts[0]||c.rate;var notePart=parts.slice(1).join(" ");d.innerHTML="<small>"+c.label+"</small><div class=\"price\" title=\""+c.rate+"\">"+pricePart+"</div><small>"+notePart+"</small>";cardsBox.appendChild(d);});var total=o.cards.length+o.customs.length;var ph=Math.max(0,8-total);for(var i=0;i<ph;i++){var e=document.createElement("div");e.className="card empty-slot";cardsBox.appendChild(e);}var note=document.getElementById("commonEmptyNote");if(!note){note=document.createElement("div");note.id="commonEmptyNote";note.style.display="none";note.style.margin="8px 0";note.style.fontSize="15px";note.textContent="Common khali hai. Common Edit dabakar kisi bhi section se + dabao, ya Edit band karo.";cardsBox.parentNode.insertBefore(note,cardsBox.nextSibling);}}
 function shrinkLabels(){document.querySelectorAll(".card small:first-of-type").forEach(function(el){var t=(el.textContent||"").trim();if(t.length>30){el.style.fontSize="11px";}else if(t.length>22){el.style.fontSize="12px";}else{el.style.fontSize="";}});}
 function applyCommon(){var o=getCommon();document.querySelectorAll(".card[data-common-key]").forEach(function(card){if(o.cards.indexOf(card.getAttribute("data-common-key"))>=0){card.classList.add("in-common");}else{card.classList.remove("in-common");}});if(hasCustomSaved()){document.body.classList.add("custom-common");}else{document.body.classList.remove("custom-common");}renderCustomCards();shrinkLabels();updateCommonEmptyNote();}
+function applyFuel(){var sec=currentSec();document.querySelectorAll(".card[data-fuel-key]").forEach(function(card){var inList=getFuel().cards.indexOf(card.getAttribute("data-fuel-key"))>=0;card.classList.toggle("fuel-removed",sec==="fuel"&&!inList&&(secEdit==="fuel"||commonEdit));});}
+function applyVisibility(){var sec=currentSec();var oc=getCommon().cards;var fl=getFuel().cards;var cardsBox=document.querySelector(".cards");if(cardsBox){cardsBox.style.display="";}["fuel","metal","currency","mandi","khad","bank"].forEach(function(s){var p=document.getElementById("panel-"+s);if(p){p.style.display=(s===sec)?"block":"none";}});document.querySelectorAll(".custom-card,.empty-slot").forEach(function(el){el.classList.toggle("js-hidden",sec!=="common");});document.querySelectorAll(".card[data-common-key]").forEach(function(card){if(card.classList.contains("custom-card")){return;}var k=card.getAttribute("data-common-key");var fk=card.getAttribute("data-fuel-key");var dsec=card.getAttribute("data-sec");var show=true;card.classList.remove("card-faded");if(sec==="common"){show=(oc.indexOf(k)>=0);}else if(sec==="fuel"){show=fk?((secEdit==="fuel"||commonEdit)?true:(fl.indexOf(fk)>=0)):false;}else if(sec==="metal"||sec==="currency"||sec==="mandi"||sec==="khad"||sec==="bank"){if(dsec!==sec){show=false;}else{var lab2=card.getAttribute("data-row-label");if(lab2){var hid2=getSecHidden(sec).indexOf(lab2)>=0;show=(secEdit===sec||commonEdit)?true:!hid2;card.classList.toggle("card-faded",hid2&&(secEdit===sec||commonEdit));}else{show=true;}}}card.classList.toggle("js-hidden",!show);});document.body.setAttribute("data-sec",sec);}
+function applyPanelHidden(){var secs=["metal","currency","mandi","khad","bank"];secs.forEach(function(sec){var hidden=getSecHidden(sec);document.querySelectorAll("#panel-"+sec+" .rotable tr").forEach(function(tr){var tds=tr.querySelectorAll("td");if(tds.length<2){return;}var lab=(tds[0].textContent||"").trim();var isHidden=hidden.indexOf(lab)>=0;tr.classList.toggle("row-hidden",isHidden&&secEdit!==sec);tr.classList.toggle("row-removed",isHidden&&secEdit===sec);});});}
 function cardEditBtnFor(card){var b=card.querySelector(".cardEditBtn");if(!b){b=document.createElement("button");b.type="button";b.className="cardEditBtn";card.appendChild(b);}return b;}
 function refreshEditButtons(){
-var o=getCommon();var sec=currentSec();
+var sec=currentSec();var o=getCommon();
 document.querySelectorAll(".card").forEach(function(card){
-if(card.id==="commonEmptyNote"||card.classList.contains("empty-slot")){return;}
-var b=cardEditBtnFor(card);
-if(!editMode){b.style.display="none";return;}
-b.classList.remove("tickpop");
-if(sec==="common"){
-b.textContent="\u2212";b.className="cardEditBtn minus";b.style.display="flex";
-b.onclick=function(){var o2=getCommon();var k=card.getAttribute("data-common-key");if(k){o2.cards=o2.cards.filter(function(x){return x!==k;});}else{var lab=card.getAttribute("data-custom-label");o2.customs=o2.customs.filter(function(c){return c.label!==lab;});}saveCommon(o2);applyCommon();refreshEditButtons();};
-}else{
-var k=card.getAttribute("data-common-key");
-if(card.classList.contains("custom-card")){b.style.display="none";return;}
-if(k&&o.cards.indexOf(k)>=0){b.textContent="\u2713";b.className="cardEditBtn tick";if(justAddedKey===k){b.classList.add("tickpop");}b.style.display="flex";b.onclick=null;}
-else if(k){b.textContent="+";b.className="cardEditBtn plus";b.style.display="flex";b.onclick=function(){var o2=getCommon();if(o2.cards.indexOf(k)<0){o2.cards.push(k);}justAddedKey=k;saveCommon(o2);applyCommon();refreshEditButtons();};}
-else{b.style.display="none";}
-}
+if(card.classList.contains("empty-slot")){return;}
+var b=cardEditBtnFor(card);b.style.display="none";b.onclick=null;
+if(secEdit===sec&&sec==="fuel"){
+var fk=card.getAttribute("data-fuel-key");if(!fk){return;}
+var inFuel=getFuel().cards.indexOf(fk)>=0;
+if(inFuel){b.textContent="−";b.className="cardEditBtn minus";b.style.display="flex";b.onclick=function(){var o2=getFuel();o2.cards=o2.cards.filter(function(x){return x!==fk;});saveFuel(o2);applyFuel();applyVisibility();refreshEditButtons();};}
+else{b.textContent="+";b.className="cardEditBtn plus";b.style.display="flex";b.onclick=function(){var o2=getFuel();if(o2.cards.indexOf(fk)<0){o2.cards.push(fk);}saveFuel(o2);applyFuel();applyVisibility();refreshEditButtons();};}
+return;}
+if(commonEdit){
+if(card.classList.contains("custom-card")){b.textContent="−";b.className="cardEditBtn minus";b.style.display="flex";b.onclick=function(){var o2=getCommon();var lab=card.getAttribute("data-custom-label");o2.customs=o2.customs.filter(function(c){return c.label!==lab;});saveCommon(o2);applyCommon();applyVisibility();refreshEditButtons();};return;}
+var k=card.getAttribute("data-common-key");if(!k){return;}
+if(o.cards.indexOf(k)>=0){b.textContent="−";b.className="cardEditBtn minus";b.style.display="flex";b.onclick=function(){var o2=getCommon();o2.cards=o2.cards.filter(function(x){return x!==k;});saveCommon(o2);applyCommon();applyVisibility();refreshEditButtons();};}
+else{b.textContent="+";b.className="cardEditBtn plus";b.style.display="flex";b.onclick=function(){var o2=getCommon();if(o2.cards.indexOf(k)<0){o2.cards.push(k);}justAddedKey=k;saveCommon(o2);applyCommon();applyVisibility();refreshEditButtons();};}
+return;}
 });
 document.querySelectorAll(".rowPlusBtn").forEach(function(btn){
-if(!editMode){btn.style.display="none";return;}
-var lab=btn.getAttribute("data-row-label");var rate=btn.getAttribute("data-row-rate");
+var rsec=btn.getAttribute("data-row-section");
+if(!commonEdit||rsec!==sec){btn.style.display="none";return;}
+var lab=btn.getAttribute("data-row-label");var rate=btn.getAttribute("data-row-rate");var ck=btn.getAttribute("data-common-key")||btn.getAttribute("data-fuel-key");
 var found=getCommon().customs.some(function(c){return c.label===lab&&c.rate===rate;});
-if(found){btn.textContent="\u2713";btn.className="rowPlusBtn tick";if(justAddedCustom===lab){btn.classList.add("tickpop");}btn.style.display="inline-flex";btn.onclick=null;}
-else{btn.textContent="+";btn.className="rowPlusBtn plus";btn.style.display="inline-flex";btn.onclick=function(){var o2=getCommon();o2.customs.push({label:lab,rate:rate,section:btn.getAttribute("data-row-section")||"other"});justAddedCustom=lab;saveCommon(o2);applyCommon();refreshEditButtons();};}
+if(ck&&o.cards.indexOf(ck)>=0){btn.textContent="−";btn.className="rowPlusBtn minus";btn.style.display="inline-flex";btn.onclick=function(){var o2=getCommon();o2.cards=o2.cards.filter(function(x){return x!==ck;});saveCommon(o2);applyCommon();applyVisibility();refreshEditButtons();};}
+else if(found){btn.textContent="−";btn.className="rowPlusBtn minus";btn.style.display="inline-flex";btn.onclick=function(){var o2=getCommon();o2.customs=o2.customs.filter(function(c){return !(c.label===lab&&c.rate===rate);});saveCommon(o2);applyCommon();refreshEditButtons();};}
+else{btn.textContent="+";btn.className="rowPlusBtn plus";btn.style.display="inline-flex";btn.onclick=function(){var o2=getCommon();if(ck){if(o2.cards.indexOf(ck)<0){o2.cards.push(ck);}justAddedKey=ck;}else{o2.customs.push({label:lab,rate:rate,section:rsec||"other"});justAddedCustom=lab;}saveCommon(o2);applyCommon();applyVisibility();refreshEditButtons();};}
+});
+document.querySelectorAll(".rowMinusBtn").forEach(function(btn){
+var rsec=btn.getAttribute("data-row-section");
+if(secEdit!==rsec){btn.style.display="none";return;}
+var lab=btn.getAttribute("data-row-label");var hidden=getSecHidden(rsec);var isHidden=hidden.indexOf(lab)>=0;
+if(isHidden){btn.textContent="↩";btn.className="rowMinusBtn restore";btn.style.display="inline-flex";btn.onclick=function(){var h=getSecHidden(rsec).filter(function(x){return x!==lab;});saveSecHidden(rsec,h);applyPanelHidden();applyVisibility();refreshEditButtons();};}
+else{btn.textContent="−";btn.className="rowMinusBtn minus";btn.style.display="inline-flex";btn.onclick=function(){var h=getSecHidden(rsec);if(h.indexOf(lab)<0){h.push(lab);}saveSecHidden(rsec,h);applyPanelHidden();applyVisibility();refreshEditButtons();};}
+});
+document.querySelectorAll(".rowFuelBtn").forEach(function(btn){
+if(secEdit!=="fuel"){btn.style.display="none";return;}
+var fk=btn.getAttribute("data-fuel-key");if(!fk){return;}
+var inFuel=getFuel().cards.indexOf(fk)>=0;
+if(inFuel){btn.textContent="−";btn.className="rowFuelBtn minus";btn.style.display="inline-flex";btn.onclick=function(){var o2=getFuel();o2.cards=o2.cards.filter(function(x){return x!==fk;});saveFuel(o2);applyFuel();applyVisibility();refreshEditButtons();};}
+else{btn.textContent="+";btn.className="rowFuelBtn plus";btn.style.display="inline-flex";btn.onclick=function(){var o2=getFuel();if(o2.cards.indexOf(fk)<0){o2.cards.push(fk);}saveFuel(o2);applyFuel();applyVisibility();refreshEditButtons();};}
 });
 updateCommonEmptyNote();
 }
 function initCommonEdit(){
 document.querySelectorAll(".rotable tr").forEach(function(tr){
 var tds=tr.querySelectorAll("td");if(tds.length<2){return;}
-var rate=(tds[1].textContent||"").trim();if(!rate||rate==="\u2014"){return;}
+var rate=(tds[1].textContent||"").trim();
 var lab=(tds[0].textContent||"").trim();if(!lab){return;}
-var panelEl=tr.closest?tr.closest(".sec-panel"):null;var secMap={"panel-metal":"metal","panel-currency":"currency","panel-mandi":"mandi","panel-khad":"khad","panel-bank":"bank"};var rowSec=(panelEl&&secMap[panelEl.id])?secMap[panelEl.id]:"other";var b=document.createElement("button");b.type="button";b.className="rowPlusBtn";b.setAttribute("data-row-label",lab);b.setAttribute("data-row-rate",rate);b.setAttribute("data-row-section",rowSec);tds[1].appendChild(b);
+var panelEl=tr.closest?tr.closest(".sec-panel"):null;var secMap={"panel-fuel":"fuel","panel-metal":"metal","panel-currency":"currency","panel-mandi":"mandi","panel-khad":"khad","panel-bank":"bank"};var rowSec=(panelEl&&secMap[panelEl.id])?secMap[panelEl.id]:"other";
+if(rate&&rate!=="—"){var b=document.createElement("button");b.type="button";b.className="rowPlusBtn";b.setAttribute("data-row-label",lab);b.setAttribute("data-row-rate",rate);b.setAttribute("data-row-section",rowSec);b.setAttribute("data-fuel-key",tr.getAttribute("data-fuel-key")||"");b.setAttribute("data-common-key",tr.getAttribute("data-common-key")||"");tds[1].appendChild(b);var ck0=tr.getAttribute("data-common-key")||tr.getAttribute("data-fuel-key");if(ck0){ROW_COMMON_MAP[lab+"|"+rate]=ck0;}}
+if(rowSec!=="other"&&rowSec!=="fuel"){var m=document.createElement("button");m.type="button";m.className="rowMinusBtn";m.setAttribute("data-row-label",lab);m.setAttribute("data-row-section",rowSec);tds[1].appendChild(m);}
+if(rowSec==="fuel"){var f=document.createElement("button");f.type="button";f.className="rowFuelBtn";f.setAttribute("data-row-label",lab);f.setAttribute("data-row-section","fuel");f.setAttribute("data-fuel-key",tr.getAttribute("data-fuel-key")||"");tds[1].appendChild(f);}
 });
-var eb=document.getElementById("editCommonBtn");var hint=document.getElementById("editHint");
-if(eb){eb.addEventListener("click",function(){editMode=!editMode;document.body.classList.toggle("edit-on",editMode);eb.classList.toggle("on",editMode);eb.textContent=editMode?"\u2713 Done \u2014 Edit band karo":"\u270f\ufe0f Edit Common Items";if(hint){hint.style.display=editMode?"":"none";}applyCommon();refreshEditButtons();if(editMode){var cb=document.querySelector(".cards");if(cb){cb.scrollIntoView({behavior:"smooth",block:"start"});}}});}
-var rb=document.getElementById("resetCommonBtn");if(rb){rb.addEventListener("click",function(){try{localStorage.removeItem("bhavsathi-common");}catch(e){}justAddedKey="";justAddedCustom="";applyCommon();refreshEditButtons();});}
+var ocP=getCommon();var beforeP=ocP.customs.length;ocP.customs=ocP.customs.filter(function(c){var k=ROW_COMMON_MAP[c.label+"|"+c.rate];return !(k&&ocP.cards.indexOf(k)>=0);});if(ocP.customs.length!==beforeP){saveCommon(ocP);}
+var eb=document.getElementById("editBtn");
+if(eb){eb.addEventListener("click",function(){var sec=currentSec();if(secEdit===sec){secEdit=null;}else if(commonEdit){commonEdit=false;}else if(sec==="common"){commonEdit=true;}else{secEdit=sec;}updateEditButtons();applyCommon();applyFuel();applyPanelHidden();applyVisibility();refreshEditButtons();if(secEdit==="fuel"){var cb=document.querySelector(".cards");if(cb){cb.scrollIntoView({behavior:"smooth",block:"start"});}}});}
+var rb=document.getElementById("resetBtn");
+if(rb){rb.addEventListener("click",function(){var sec=currentSec();if(sec==="common"){try{localStorage.removeItem("bhavsathi-common");}catch(e){}justAddedKey="";justAddedCustom="";}else if(sec==="fuel"){try{localStorage.removeItem("bhavsathi-fuel");}catch(e){}}else{try{localStorage.removeItem("bhavsathi-sec-"+sec);}catch(e){}}applyCommon();applyFuel();applyPanelHidden();applyVisibility();refreshEditButtons();});}
 document.querySelectorAll(".langbtn").forEach(function(lb){lb.addEventListener("click",function(){setTimeout(shrinkLabels,0);});});
-applyCommon();refreshEditButtons();
+updateEditButtons();applyCommon();applyFuel();applyPanelHidden();applyVisibility();refreshEditButtons();
 }
 initCommonEdit();
 
